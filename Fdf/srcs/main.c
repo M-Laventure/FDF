@@ -9,8 +9,6 @@ int ft_img_size(int width, int height)
     return (size);
 }
 
-
-
 //#####  MAIN FDF #####
 
 int main(int argc, char **argv)
