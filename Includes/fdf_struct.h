@@ -18,7 +18,7 @@ typedef struct  s_env
 
 typedef struct s_pixel t_pixel;
 
-struct s_pixel
+typedef struct s_pixel
 {
                 unsigned int color;
                 int z;

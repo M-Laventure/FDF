@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 12:38:54 by malavent          #+#    #+#             */
-/*   Updated: 2019/02/14 12:21:53 by malavent         ###   ########.fr       */
+/*   Updated: 2019/02/19 08:51:24 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int					ft_intsize(int n);
 int 				ft_convert_power(int n, int b);
 int					ft_get_next_line(const int fd, char **line);
 char				*ft_strjoin_free(char **s1, char **s2);
-int					ft_is_inbase(int base_src, char c);s
+int					ft_is_inbase(int base_src, char c);
+size_t				ft_strnlen(const char *s, size_t maxlen);
 
 #endif
