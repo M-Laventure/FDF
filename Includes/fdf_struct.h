@@ -1,6 +1,7 @@
 #ifndef FDF_STRUCT_H
 #define FDF_STRUCT_H
 #define WHITE 255
+#include "fdf.h"
 
 typedef struct  s_env
 {
@@ -24,8 +25,8 @@ typedef struct s_pixel
                 int z;
                 int x;
                 int y;
-                t_pixel *next;
-};
+                struct s_pixel *next;
+}              t_pixel;
 
 typedef struct  s_map
 {
