@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/15 13:42:13 by brobson          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:03:25 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		main(int argc, char **argv)
 		return (-1);
 	i = 0;
 	// tools 
-	map = ft_get_map(fd);
+	map = ft_get_map(fd, &fdf);
 	if (!map)
 		return (1);
 	while (map->p_alpha)

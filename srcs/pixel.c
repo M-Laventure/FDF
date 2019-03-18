@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/15 11:17:22 by brobson          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:15:42 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	fill_pixel(t_env *fdf, int x, int y, int color)
 {
-	fdf->data[(y * fdf->width) + x] = color;
+	fdf->img_data[(y * fdf->width) + x] = color;
 }
 
 void segment(t_env *fdf, int x1, int y1, int x2, int y2)

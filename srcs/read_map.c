@@ -6,7 +6,7 @@
 /*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 10:22:22 by malavent          #+#    #+#             */
-/*   Updated: 2019/03/18 13:41:30 by brobson          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:08:36 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 t_pixel *pushback(t_env *fdf, char *point, t_pixel *tmp)
 {
 	if (tmp->next == NULL)
-		tmp->next = ft_get_pixel(point, fdf-wa, y);
+		tmp->next = ft_get_pixel(point, fdf);
 	else
-		pushback(x, y, point, tmp->next);
+		pushback(fdf, point, tmp->next);
 	return (tmp);
 }
 
@@ -26,7 +26,6 @@ t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 	t_pixel *tmp;
 	t_pixel *begin;
 	char 	**tmp_line;
-	int x-
 	int i;
 
 	i = 0;
@@ -47,7 +46,7 @@ t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 	{
 		if (ft_parsing(tmp_line[i]) == -1)
 			return (NULL);
-		tmp = pushback(x, y, tmp_line[i], tmp);
+		tmp = pushback(fdf, tmp_line[i], tmp);
 		i++;
 	}
 	return (begin);
@@ -82,12 +81,17 @@ t_pixel *ft_get_pixel(char *str, t_env *fdf)
 		pixel->x = fdf->x_start;
 		pixel->y = fdf->y_start;
 	}
-	pixel->x = fdf->x_prev + fdf->x_gap;
-	pixel->y = fdf->y_prev + fdf->y_gap;
+	else
+	{
+		pixel->x = fdf->x_prev + fdf->x_gap;
+		pixel->y = fdf->y_prev + fdf->y_gap;
+		fdf->x_prev = pixel->x;
+		fdf->y_prev = pixel->y;
+	}
 	return (pixel);
 }
 
-t_map *ft_get_map(int fd)
+t_map *ft_get_map(int fd, t_env *fdf)
 {
 	t_map   *map;
 	t_pixel *pix_line;
@@ -95,18 +99,18 @@ t_map *ft_get_map(int fd)
 	int     y;
 
 	y  = 0;
-	if (!(map = ft_init_map(fd)))
+	if (!(map = ft_init_map(fd, fdf)))
 		return (NULL);	
 	if (!(pix_line = ft_memalloc(sizeof(t_pixel *))))
 		return (NULL);
 	lseek(fd, 0, SEEK_SET);
 	ft_get_next_line(fd, &ret_gnl);
-	if (!(pix_line = ft_get_line(y, map, ret_gnl)))
+	if (!(pix_line = ft_get_line(map, ret_gnl, fdf)))
 		return (NULL);
 	map->p_alpha = pix_line;
 	while ((ft_get_next_line(fd, &ret_gnl) > 0))
 	{
-		if (!(pix_line = ft_get_line(y, map, ret_gnl)))
+		if (!(pix_line = ft_get_line(map, ret_gnl, fdf)))
 			return (NULL);
 		while (pix_line)
 			pix_line = pix_line->next;
