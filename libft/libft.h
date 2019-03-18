@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 12:38:54 by malavent          #+#    #+#             */
-/*   Updated: 2019/03/12 17:12:40 by malavent         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:22:45 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+long				ft_abs(long n);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 int					ft_strcmp(char const *s1, char const *s2);

@@ -1,7 +1,7 @@
 #ifndef FDF_STRUCT_H
-#define FDF_STRUCT_H
-#define WHITE 255
-#include "fdf.h"
+# define FDF_STRUCT_H
+# define CTE(z) z != 0 ? (0.5) : (0)
+# include "fdf.h"
 
 typedef struct  s_env
 {
@@ -15,6 +15,12 @@ typedef struct  s_env
                 int height;
                 int size_img;
                 int endian;
+				int x_gap;
+				int y_gap;
+				int x_start;
+				int y_start;
+				int x_prev;
+				int y_prev;
 }               t_env;
 
 typedef struct s_pixel t_pixel;

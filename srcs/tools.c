@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
+/*   Updated: 2019/03/15 13:36:54 by brobson          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 int ft_strlen_tab(char **tab)
 {
@@ -55,7 +66,7 @@ void ft_pxl_pushback(t_pixel *begin, t_pixel *node)
 		ft_pxl_pushback(begin->next, node);	
 }
 
-t_map *ft_init_map(int fd)
+t_map *ft_init_map(int fd, t_env *fdf)
 {
 	t_map *map;
 	t_pixel *p_alpha;
@@ -71,6 +82,8 @@ t_map *ft_init_map(int fd)
 	map->nb_col =  ft_strlen_tab(tmp_line);
 	map->map_size = map->nb_lines * map->nb_col;
 	map->p_alpha = p_alpha;
+	map->p_alpha->x = fdf->x_start;
+	map->p_alpha->y = fdf->y_start;
 	map->p_alpha->next = NULL;
 	ft_strdel(&line);
 //	ft_tabdel(tmp_line);
@@ -79,19 +92,41 @@ t_map *ft_init_map(int fd)
 
 int ft_parsing(char *line)
 {
-	char *post_coma;
-
+	char 	*post_coma;
+	char	*pre_coma;
+	int		len;
+	int		i;
+	
+	len = 0;
+	i = 0;
 	if (ft_strchr(line, ',') != NULL)
 	{
-		if (!(post_coma = ft_strdup(ft_strchr(line, ',') + 3))) //parsing of color after prefix  "0x"
+		if (!(post_coma = ft_strdup(ft_strchr(line, ',') + 3)))
 			return (-1);
-	}                       
+		while (line[i++] != ',')
+			len++;
+		i = 0;
+		if (!(pre_coma = ft_strsub(line, 0, len)))
+			return (-1);
+	}
 	if (ft_strchr(line, ',') == NULL)
-		return (ft_isdigit(*line) && (ft_strlen(line) == 1) ? 1 : 0);
+	{
+		while (pre_coma[i])
+		{
+			if (ft_isdigit(ft_atoi(&pre_coma[i++]) == 0))
+				return (-1);
+		}
+		return (1);
+	}
 	else
 	{
-		if (!ft_isdigit(*line) || line[1] != ',' || (line[2] != '0' && line[3] != 'x'))
-			return (-1);	
+		while (pre_coma[i])
+		{
+			if (ft_isdigit(ft_atoi(&pre_coma[i++]) == 0))
+				return (-1);
+		}
+		if (line[len] != ',' || (line[len + 1] != '0' && line[len + 2] != 'x'))
+			return (-1);
 		while (*post_coma)
 		{
 			if (!ft_is_inbase(16, *post_coma))
@@ -100,34 +135,4 @@ int ft_parsing(char *line)
 		}
 	}
 	return (1);
-}
-
-int main(int argc, char **argv)
-{
-	t_map *map;
-	int fd;
-	int i;
-
-	i = 0;
-	if (argc != 2)
-		return (0);
-	fd = open(argv[1], O_RDONLY);
-	printf("HERE\n");
-	map = ft_get_map(fd);
-	printf("Nb_lines : %d\n", map->nb_lines);
-	printf("HERE\n");
-	while (map->p_alpha)
-	{
-		if (i % (map->nb_col) == 0 && i != 0)
-			printf("\n");
-		printf("%d", map->p_alpha->z);
-		printf(",%u", map->p_alpha->color);
-		if (map->p_alpha->next && map->p_alpha->next->z == 50)
-			printf(" ");
-		else if (map->p_alpha->next && (map->p_alpha->z == 0 || map->p_alpha->z == 50) && (map->p_alpha->next->z == 0))
-			printf("  ");
-		map->p_alpha = (map->p_alpha)->next;
-		i++;
-	}
-	return (0);
 }

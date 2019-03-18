@@ -6,48 +6,54 @@
 /*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 10:22:22 by malavent          #+#    #+#             */
-/*   Updated: 2019/03/13 14:09:00 by malavent         ###   ########.fr       */
+/*   Updated: 2019/03/18 13:41:30 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
 
-t_pixel *pushback(int x, int y, char *point, t_pixel *tmp)
+t_pixel *pushback(t_env *fdf, char *point, t_pixel *tmp)
 {
 	if (tmp->next == NULL)
-		tmp->next = ft_get_pixel(point, x, y);
+		tmp->next = ft_get_pixel(point, fdf-wa, y);
 	else
 		pushback(x, y, point, tmp->next);
 	return (tmp);
 }
 
-t_pixel *ft_get_line(int y, t_map *map, char *ret_gnl)
+t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 {
 	t_pixel *tmp;
 	t_pixel *begin;
 	char 	**tmp_line;
-	int x;
+	int x-
+	int i;
 
-	x = 0;
+	i = 0;
 	if (!(tmp_line = ft_strsplit(ret_gnl, ' ')))
 		return (NULL);
 	if (map->nb_col != ft_strlen_tab(tmp_line))
+	{
+		ft_putstr("Found wrong line length. Exiting.\n");
 		return (NULL);
-	if (!(tmp = ft_get_pixel(tmp_line[x], x, y)))
+	}
+	if (ft_parsing(tmp_line[i]) == -1)
+		return (NULL);
+	if (!(tmp = ft_get_pixel(tmp_line[i], fdf)))
 		return (NULL);
 	begin = tmp;
-	x++;
-	while (x < map->nb_col)
+	i++;
+	while (i < map->nb_col)
 	{
-		if (ft_parsing(tmp_line[x]) == -1)
+		if (ft_parsing(tmp_line[i]) == -1)
 			return (NULL);
-		tmp = pushback(x, y, tmp_line[x], tmp);
-		x++;
+		tmp = pushback(x, y, tmp_line[i], tmp);
+		i++;
 	}
 	return (begin);
 }
 
-t_pixel *ft_get_pixel(char *str, int x, int y)
+t_pixel *ft_get_pixel(char *str, t_env *fdf)
 {
 	t_pixel *pixel;
 	char    *tmp;
@@ -55,7 +61,7 @@ t_pixel *ft_get_pixel(char *str, int x, int y)
 
 	post_coma = NULL;
 	if (ft_strchr(str, ',') != NULL)
-		post_coma = ft_strdup(ft_strchr((char const *)str, ',') + 1);
+		post_coma = ft_strdup(ft_strchr((char const *)str, ',') + 3);
 	if (!(pixel = ft_init_pix()))
 		return (NULL);
 	if (post_coma != NULL)
@@ -71,8 +77,13 @@ t_pixel *ft_get_pixel(char *str, int x, int y)
 		pixel->z = ft_atoi(str);
 		pixel->color = 16777215;
 	}
-	pixel->x = x;
-	pixel->y = y;
+	if (fdf->x_prev == fdf->x_start)
+	{
+		pixel->x = fdf->x_start;
+		pixel->y = fdf->y_start;
+	}
+	pixel->x = fdf->x_prev + fdf->x_gap;
+	pixel->y = fdf->y_prev + fdf->y_gap;
 	return (pixel);
 }
 
@@ -95,19 +106,13 @@ t_map *ft_get_map(int fd)
 	map->p_alpha = pix_line;
 	while ((ft_get_next_line(fd, &ret_gnl) > 0))
 	{
-		printf("HERE3\n");
 		if (!(pix_line = ft_get_line(y, map, ret_gnl)))
 			return (NULL);
 		while (pix_line)
-		{
-			printf("%u color : ", pix_line->color);
 			pix_line = pix_line->next;
-		}
 		ft_pxl_pushback((map->p_alpha)->next, pix_line);
-		printf("HERE5\n");
 		y++;
 	}
-	printf("HERE6\n");
 	ft_strdel(&ret_gnl);
 	return (map);
 }
