@@ -6,7 +6,7 @@
 /*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 10:22:22 by malavent          #+#    #+#             */
-/*   Updated: 2019/03/18 14:08:36 by brobson          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:42:42 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,19 @@ t_pixel *ft_get_pixel(char *str, t_env *fdf)
 	}
 	else
 	{
-		pixel->x = fdf->x_prev + fdf->x_gap;
-		pixel->y = fdf->y_prev + fdf->y_gap;
+		pixel->x = (fdf->x_prev) + (fdf->x_gap);
+		pixel->y = (fdf->y_prev) + (fdf->y_gap);
+	}
 		fdf->x_prev = pixel->x;
 		fdf->y_prev = pixel->y;
-	}
+		//printf("%d\n x:", fdf->x_prev);
+		//printf("%d\n y:", fdf->y_prev);
+		//printf("%d\n : x_gap", fdf->x_gap); 
+		//printf("%d\n : y_gap", fdf->x_gap); 
+		//printf("%d\n : x_start", fdf->x_gap); 
+		//printf("%d\n : y_start", fdf->x_gap); 
+		//printf("%d\n : x_prev", fdf->x_gap); 
+		//printf("%d\n : y_prev", fdf->x_gap); 
 	return (pixel);
 }
 

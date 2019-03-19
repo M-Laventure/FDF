@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/18 14:15:42 by brobson          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:47:45 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	fill_pixel(t_env *fdf, int x, int y, int color)
 
 void segment(t_env *fdf, int x1, int y1, int x2, int y2)
 {
+//	printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", x1, y1, x2, y2);
   int dx,dy,i,xinc,yinc,cumul,x,y;
 	i = 1;
   x = x1;

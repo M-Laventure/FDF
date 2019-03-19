@@ -1,6 +1,7 @@
 #ifndef FDF_STRUCT_H
 # define FDF_STRUCT_H
 # define CTE(z) z != 0 ? (0.5) : (0)
+
 # include "fdf.h"
 
 typedef struct  s_env
