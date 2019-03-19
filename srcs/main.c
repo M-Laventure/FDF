@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/18 16:17:01 by brobson          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:22:46 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	draw(t_pixel *current, t_env *fdf)
 	}
 }
 
-//#####  MAIN fdf  #####
+//#####  MAIN fdf-> #####
 
 int		main(int argc, char **argv)
 {
@@ -57,12 +57,9 @@ int		main(int argc, char **argv)
 	}
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return (-1);
-	i = 0;
 	// tools 
-	map = ft_get_map(fd, &fdf);
-	if (!map)
-		return (1);
-	while (map->p_alpha)
+	i = 0;
+	/*while (map->p_alpha)
 	{
 		if (i % (map->nb_col) == 0 && i != 0)
 			printf("\n");
@@ -70,7 +67,7 @@ int		main(int argc, char **argv)
 			printf(" ");
 		map->p_alpha = (map->p_alpha)->next;
 		i++;
-	}
+	}*/
 	// tools
 	fdf.x_start = 50;
 	fdf.y_start = 50;
@@ -85,9 +82,10 @@ int		main(int argc, char **argv)
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, fdf.width, fdf.height, "fdf");
 	fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, fdf.width, fdf.height);
 	fdf.img_data = (unsigned int *)mlx_get_data_addr(fdf.img_ptr, &fdf.bits_per_pixel, &fdf.size_line , &fdf.endian);
+	//printf("HERE\n");
+	map = ft_get_map(fd, &fdf);
 	draw(map->p_alpha, &fdf);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
-	//printf("HERE\n");
 	close(fd);
 	//printf("HERE\n");
 	mlx_loop(fdf.mlx_ptr);
