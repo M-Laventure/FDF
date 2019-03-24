@@ -1,11 +1,12 @@
 #ifndef FDF_STRUCT_H
 # define FDF_STRUCT_H
-# define CTE(z) z != 0 ? (0.5) : (0)
-
+# define CTE1(z) z != 0 ? (0.5) : (0)
+# define CTE2(z) z != 0 ? (0.4) : (0)
 # include "fdf.h"
 
 typedef struct  s_env
 {
+				int proj_type;
                 void *mlx_ptr;
                 void *win_ptr;
                 void *img_ptr;

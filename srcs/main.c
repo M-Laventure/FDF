@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/19 14:22:46 by malavent         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:02:07 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,80 @@ int		ft_img_size(int width, int height)
 	return (size);
 }
 
-void	draw(t_pixel *current, t_env *fdf)
+void	set_coord_para(int *x1, int *y1, int *x2, int *y2, int z)
 {
-	int x1, y1, x2, y2, i;
-	i = -1;
-	x1 = 0;
-	x2 = 0;
-	y1 = 0;
-	y2 = 0;
+	*x1 =  *x1 + (CTE1(z) * z);
+	*y1 = *y1 + ((CTE1(z) / 2) * z);
+	*x2 = *x2 + ((CTE1(z) * z));
+	*y2 = *y2 + ((CTE1(z) / 2) * z);
+}
+
+void	set_coord_iso(int *x1, int *y1, int *x2, int *y2, int z)
+{
+	int stock1;
+	int stock2;
+
+	stock1 = *x1;
+	stock2 = *x2;
+	*x1 = (CTE1(z) * (*x1)) - (CTE2(z) * (*y1));
+	*y1 = z + ((CTE1(z) / 2) * stock1) + ((CTE2(z) / 2) * (*y1));
+	*x2 = (CTE1(z) * (*x2)) - (CTE2(z) * (*y2));
+	*y2 = z + ((CTE1(z) / 2) * stock2) + ((CTE2(z) / 2) * (*y2));
+}
+
+void	draw(t_pixel *current, t_map *map, t_env *fdf)
+{
+	int i;
+	int	j;
+	int x1; 
+	int y1;
+	int x2;
+	int y2;
+	int color;
+	i = 1;
+	j = 1;
+
 	while (current->next)
 	{
-		//printf("current x : %d\n", current->x);
-		x1 = current->x + (CTE(current->z) * current->z);
-		y1 = current->y + ((CTE(current->z) / 2) * current->z);
-		x2 = current->next->x + ((CTE(current->z) * current->next->z));
-		y2 = current->next->y + ((CTE(current->next->z) / 2) * current->next->z);
-		segment(fdf, x1, y1, x2, y2);
+		printf("current x : %d\n", current->x);
+		color  = current->color;
+		if ((i % map->nb_col == 0))
+		{
+			j++;
+			x1 = current->x;
+			y1 = current->y;
+			x2 = current->x;
+			y2 = current->y + fdf->y_gap;
+			set_coord[fdf->proj_type](&x1, &x2, &y1, &y2, current->z);
+			segment(fdf, x1, y1, x2, y2, color);
+		}
+		else if (j % map->nb_lines == 0)
+		{
+			x1 = current->x;
+			y1 = current->y;
+			x2 = current->x + current->next->x;
+			y2 = current->y;
+			set_coord[fdf->proj_type](&x1, &x2, &y1, &y2, current->z);
+			segment(fdf, x1, y1, x2, y2, color);
+		}
+		else
+		{
+			x1 = current->x;
+			y1 = current->y;
+			x2 = current->x;
+			y2 = current->y + fdf->y_gap;
+			set_coord[fdf->proj_type](&x1, &x2, &y1, &y2, current->z);
+			segment(fdf, x1, y1, x2, y2, color);
+			//
+			x1 = current->x;
+			y1 = current->y;
+			x2 = current->x + current->next->x;
+			y2 = current->y;
+			set_coord[fdf->proj_type](&x1, &x2, &y1, &y2, current->z);
+			segment(fdf, x1, y1, x2, y2, color);
+		}
 		current = current->next;
+		i++;
 	}
 }
 
@@ -60,34 +117,34 @@ int		main(int argc, char **argv)
 	// tools 
 	i = 0;
 	/*while (map->p_alpha)
-	{
-		if (i % (map->nb_col) == 0 && i != 0)
-			printf("\n");
-		printf("%d", map->p_alpha->x);
-			printf(" ");
-		map->p_alpha = (map->p_alpha)->next;
-		i++;
-	}*/
+	  {
+	  if (i % (map->nb_col) == 0 && i != 0)
+	  printf("\n");
+	  printf("%d", map->p_alpha->x);
+	  printf(" ");
+	  map->p_alpha = (map->p_alpha)->next;
+	  i++;
+	  }*/
 	// tools
-	fdf.x_start = 50;
-	fdf.y_start = 50;
+	fdf.x_start = 200;
+	fdf.y_start = 200;
 	fdf.x_prev = fdf.x_start;
 	fdf.y_prev = fdf.y_start;
-	fdf.x_gap = 10;
-	fdf.y_gap = 10;
-	fdf.width = 1300;
-	fdf.height = 800;
+	fdf.x_gap = 50;
+	fdf.y_gap = 80;
+	fdf.width = 2160;
+	fdf.height = 1440;
 	fdf.size_img = fdf.width * fdf.height;
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, fdf.width, fdf.height, "fdf");
 	fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, fdf.width, fdf.height);
 	fdf.img_data = (unsigned int *)mlx_get_data_addr(fdf.img_ptr, &fdf.bits_per_pixel, &fdf.size_line , &fdf.endian);
-	//printf("HERE\n");
 	map = ft_get_map(fd, &fdf);
-	draw(map->p_alpha, &fdf);
+	printf("HERE\n");
+	draw(map->p_alpha, map, &fdf);
+	printf("HERE\n");
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
 	close(fd);
-	//printf("HERE\n");
 	mlx_loop(fdf.mlx_ptr);
 	//printf("HERE\n");
 	return (0);

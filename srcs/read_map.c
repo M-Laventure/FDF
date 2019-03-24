@@ -6,24 +6,23 @@
 /*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 10:22:22 by malavent          #+#    #+#             */
-/*   Updated: 2019/03/19 14:22:53 by malavent         ###   ########.fr       */
+/*   Updated: 2019/03/21 16:02:09 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
 
-t_pixel *pushback(t_env *fdf, char *point, t_pixel *tmp)
+t_pixel *pushback(t_env *fdf, t_map *map, char *point, t_pixel *tmp)
 {
 	if (tmp->next == NULL)
-		tmp->next = ft_get_pixel(point, fdf);
+		tmp->next = ft_get_pixel(point, map, fdf);
 	else
-		pushback(fdf, point, tmp->next);
+		pushback(fdf, map, point, tmp->next);
 	return (tmp);
 }
 
 t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 {
-	printf("coucou\n");
 	t_pixel *tmp;
 	t_pixel *begin;
 	char 	**tmp_line;
@@ -39,7 +38,7 @@ t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 	}
 	if (ft_parsing(tmp_line[i]) == -1)
 		return (NULL);
-	if (!(tmp = ft_get_pixel(tmp_line[i], fdf)))
+	if (!(tmp = ft_get_pixel(tmp_line[i], map, fdf)))
 		return (NULL);
 	begin = tmp;
 	i++;
@@ -47,13 +46,13 @@ t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 	{
 		if (ft_parsing(tmp_line[i]) == -1)
 			return (NULL);
-		tmp = pushback(fdf, tmp_line[i], tmp);
+		tmp = pushback(fdf, map, tmp_line[i], tmp);
 		i++;
 	}
 	return (begin);
 }
 
-t_pixel *ft_get_pixel(char *str, t_env *fdf)
+t_pixel *ft_get_pixel(char *str, t_map *map, t_env *fdf)
 {
 	t_pixel 	*pixel;
 	char    	*tmp;
@@ -78,8 +77,8 @@ t_pixel *ft_get_pixel(char *str, t_env *fdf)
 		pixel->z = ft_atoi(str);
 		pixel->color = 16777215;
 	}
-	pixel->x = fdf->x_start + (n_pt * fdf->x_gap);
-   	pixel->y = fdf->y_start + (n_pt * fdf->y_gap);
+	pixel->x = fdf->x_start + ((n_pt % map->nb_col) * fdf->x_gap);
+   	pixel->y = fdf->y_start + ((n_pt / map->nb_col) * fdf->y_gap);
 	n_pt++;
 	return (pixel);
 }
