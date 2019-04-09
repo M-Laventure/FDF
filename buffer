@@ -1,0 +1,1 @@
+void (set_coord[2](t_env *)) = {set_coord_iso, set_coord_para};

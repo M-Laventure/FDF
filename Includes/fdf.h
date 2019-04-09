@@ -8,12 +8,11 @@
 # include "fdf_struct.h"
 # include "mlx.h"
 # define RED  0xff0000
-# define PROJ(x) x == 1 ? (1) : (0)
 
-void	set_coord_iso(t_env *fdf, int x, int y, int z);
-void	set_coord_para(t_env *fdf, int x, int y, int z);
+void	set_coord_iso(t_env *fdf);
+void	set_coord_para(t_env *fdf);
 
-void (*set_coord[2](t_env, int , int, int) = {set_coord_iso, set_coord_para};
+//void (set_coord[2](t_env *)) = {set_coord_iso, set_coord_para};
 
 void	segment(t_env *fdf, int color);
 void    fill_pxl(t_env *fdf, int x, int y, int color);

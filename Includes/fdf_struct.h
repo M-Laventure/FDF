@@ -1,11 +1,9 @@
 #ifndef FDF_STRUCT_H
 # define FDF_STRUCT_H
-# define CTE1(z) z != 0 ? (0.5) : (0)
-# define CTE2(z) z != 0 ? (0.4) : (0)
+# define PROJ(x) x == 1 ? (1) : (0)
+# define CTE1 0.5
+# define CTE2 0.8 
 # include "fdf.h"
-
-
-void (*set_coord[2](t_env, int , int, int) = {set_coord_iso, set_coord_para};
 
 typedef struct  s_env
 {
@@ -26,11 +24,11 @@ typedef struct  s_env
 				int proj_type;
 				int x1;
 				int y1;
+				int z1;
+				int z2;
 				int x2;
 				int y2;
 }               t_env;
-
-typedef struct s_pixel t_pixel;
 
 typedef struct s_pixel
 {
