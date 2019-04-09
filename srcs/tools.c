@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/28 18:12:54 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/09 13:26:59 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ t_map *ft_init_map(int fd, t_env *fdf)
 
 	line = 0;
 	ft_get_next_line(fd, &line);
-	tmp_line = ft_strsplit(line, ' ');
+	if (!(tmp_line = ft_strsplit(line, ' ')))
+		return (NULL);
 	if (!(map = (t_map *)malloc(sizeof(t_map))) || !(p_alpha = ft_init_pix()))
 		return (NULL);
-	map->nb_lines = ft_nblines(fd);
+	map->nb_lines = ft_nblines(fd) + 1;
 	map->nb_col =  ft_strlen_tab(tmp_line);
 	map->map_size = map->nb_lines * map->nb_col;
 	map->p_alpha = p_alpha;

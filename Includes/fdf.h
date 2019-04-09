@@ -9,6 +9,7 @@
 # include "mlx.h"
 # define RED  0xff0000
 
+void	draw(t_pixel *current, t_map *map, t_env *fdf);
 void	set_coord_iso(t_env *fdf);
 void	set_coord_para(t_env *fdf);
 
@@ -27,7 +28,6 @@ void	ft_pxl_pushback(t_pixel *begin, t_pixel *maillon);
 t_pixel *ft_get_pixel(char *str, t_map *map, t_env *fdf);
 t_pixel *ft_init_pix();
 void	fill_pixel(t_env *fdf, int x, int y, int color);
-void    draw(t_pixel *current, t_map *map, t_env *fdf);
 t_pixel *pushback(t_env *fdf, t_map *map, char *point, t_pixel *tmp);
 
 

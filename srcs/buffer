@@ -1,1 +1,113 @@
-void (*set_coord[2](t_env, int , int, int) = {set_coord_iso, set_coord_para};
+int		ft_img_size(int width, int height)
+{
+	int size;
+
+	size = width * height;
+	return (size);
+}
+
+void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
+{
+	static int i = 1;
+
+	printf("i = %d\n", i);
+	if ((i % (map->nb_col + 1) == 0) && current)
+	{
+		fdf->x2 = current->x;
+		fdf->y2 = current->y;
+		fdf->z2 = current->z;
+		i = 1;
+		return ;
+	}
+	if (!current)
+		return ;
+	printf("i = %d\n", i);
+	i++;
+	get_under_node(fdf, map, current->next);
+}
+
+void	set_down(t_map *map, t_env *fdf, t_pixel *current)//, void (*set_coord[2])(t_env *))
+{
+	printf("currentY%d\n", current->y);
+	fdf->x1 = current->x;
+	fdf->y1 = current->y;
+	fdf->z1 = current->z;
+	get_under_node(fdf, map, current);
+	printf("underY%d\n", fdf->y2);
+
+	/*printf("-------Down------------\n");
+	printf("X1:%d\n", fdf->x1);
+	printf("X2:%d\n", fdf->x2);
+	printf("Y1:%d\n", fdf->y1);
+	printf("Y2:%d\n", fdf->y2);*/
+
+//	set_coord[fdf->proj_type](fdf);
+	segment(fdf, current->color);
+}
+
+void	set_right(t_env *fdf, t_pixel *current)//, void (*set_coord[2])(t_env *))
+{
+	fdf->x1 = current->x;
+	fdf->y1 = current->y;
+	fdf->x2 = (current->next)->x;
+	fdf->y2 = (current->next)->y;
+	fdf->z1 = current->z;
+	fdf->z2 = (current->next)->z;
+//	set_coord[fdf->proj_type](fdf);
+	segment(fdf, current->color);
+}
+
+void	set_coord_para(t_env *fdf)
+{
+	printf("ONESTLAPROJPARA\n");
+	fdf->x1 = fdf->x1 + (CTE1 * fdf->z1);
+	fdf->y1 = fdf->y1 + ((CTE1 / 2) * fdf->z1);
+	fdf->x2 = fdf->x2 + ((CTE1 * fdf->z2));
+	fdf->y2 = fdf->y2 + ((CTE1 / 2) * fdf->z2);
+}
+
+void	set_coord_iso(t_env *fdf)
+{
+	printf("ONESTLAPROJISO\n");
+	int stock1;
+	int stock2;
+
+	stock1 = fdf->x1;
+	stock2 = fdf->x2;
+	fdf->x1 = (CTE1 * (fdf->x1)) - (CTE2 * (fdf->y1));
+	fdf->y1 = fdf->z1 + ((CTE1 / 2) * stock1) + ((CTE2 / 2) * (fdf->y1));
+	fdf->x2 = (CTE1 * (fdf->x2)) - (CTE2 * (fdf->y2));
+	fdf->y2 = fdf->z2 + ((CTE1 / 2) * stock2) + ((CTE2 / 2) * (fdf->y2));
+}
+
+void	draw(t_pixel *current, t_map *map, t_env *fdf)
+{
+	int j;
+	int i;
+
+	i = 1;
+	j = 1;
+//	void (*set_coord[2])(t_env *) = {set_coord_iso, set_coord_para};
+	while (current)
+	{
+		if ((i % map->nb_col == 0))
+		{
+			printf("Jdown = %d\n", j);
+			set_down(map, fdf, current);//, set_coord);
+			j++;
+		}
+		else if (j % map->nb_lines == 0)
+		{
+			printf("Jright = %d\n", j);
+			set_right(fdf, current);//, set_coord);
+		}
+		else
+		{
+			printf("Jgen = %d\n", j);
+			set_right(fdf, current);//, set_coord);
+			set_down(map, fdf, current);//,set_coord);
+		}
+		current = current->next;
+		i++;
+	}
+}

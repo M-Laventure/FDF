@@ -6,11 +6,122 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/03/28 18:13:39 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:01:30 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
+
+int		ft_img_size(int width, int height)
+{
+	int size;
+
+	size = width * height;
+	return (size);
+}
+
+void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
+{
+	static int k = 0;
+
+	//printf("k = %d\n", k);
+	if ((k % map->nb_col == 0) && current)
+	{
+		fdf->x2 = current->x;
+		fdf->y2 = current->y;
+		fdf->z2 = current->z;
+		k = 0;
+		return ;
+	}
+	if (!current)
+		return ;
+	//printf("k = %d\n", k);
+	k++;
+	get_under_node(fdf, map, current->next);
+}
+
+void	set_down(t_map *map, t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
+{
+	fdf->x1 = current->x;
+	fdf->y1 = current->y;
+	fdf->z1 = current->z;
+	get_under_node(fdf, map, current);
+	printf("x2 : %d\n", fdf->x2);
+
+	/*printf("-------Down------------\n");
+	printf("X1:%d\n", fdf->x1);
+	printf("X2:%d\n", fdf->x2);
+	printf("Y1:%d\n", fdf->y1);
+	printf("Y2:%d\n", fdf->y2);*/
+
+	set_coord[fdf->proj_type](fdf);
+	segment(fdf, current->color);
+}
+
+void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
+{
+	fdf->x1 = current->x;
+	fdf->y1 = current->y;
+	fdf->z1 = current->z;
+//	printf("current->x : %d\n", fdf->x1);
+	fdf->x2 = (current->next)->x;
+//	printf("current_next->x : %d\n", fdf->x2);
+	fdf->y2 = (current->next)->y;
+	fdf->z2 = (current->next)->z;
+	set_coord[fdf->proj_type](fdf);
+	segment(fdf, current->color);
+}
+
+void	set_coord_para(t_env *fdf)
+{
+	fdf->x1 = fdf->x1 + CTE1 * fdf->z1;
+	fdf->y1 = fdf->y1 + CTE1 / 2 * fdf->z1;
+	fdf->x2 = fdf->x2 + CTE1 * fdf->z2;
+	fdf->y2 = fdf->y2 + CTE1 / 2 * fdf->z2;
+}
+
+void	set_coord_iso(t_env *fdf)
+{
+	int stock1;
+	int stock2;
+
+	stock1 = fdf->x1;
+	stock2 = fdf->x2;
+	fdf->x1 = (CTE1 * (fdf->x1)) - (CTE2 * (fdf->y1));
+	fdf->y1 = fdf->z1 + ((CTE1 / 2) * fdf->x1) + ((CTE2 / 2) * (fdf->y1));
+	fdf->x2 = (CTE1 * (fdf->x2)) - (CTE2 * (fdf->y2));
+	fdf->y2 = fdf->z2 + ((CTE1 / 2) * fdf->x2) + ((CTE2 / 2) * (fdf->y2));
+}
+
+void	draw(t_pixel *current, t_map *map, t_env *fdf)
+{
+	int j;
+	int i;
+
+	i = 1;
+	j = 1;
+
+	void (*set_coord[2])(t_env *) = {set_coord_iso, set_coord_para};
+	while (current)
+	{
+		printf("current_x : %d\n", current->x);
+		if (i % map->nb_col == 0 && j % map->nb_lines != 0)
+		{
+			j++;
+			set_down(map, fdf, current, set_coord);
+			printf("\n");
+		}
+		if (i % map->nb_col != 0 && j % map->nb_lines != 0)
+		{
+			set_down(map, fdf, current, set_coord);
+			set_right(fdf, current, set_coord);
+		}
+		if (j % map->nb_lines == 0 && i % map->nb_col != 0)
+			set_right(fdf, current, set_coord);
+		current = current->next;
+		i++;
+	}
+}
 
 void	fill_pixel(t_env *fdf, int x, int y, int color)
 {
