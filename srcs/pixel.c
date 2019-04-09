@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/09 17:01:30 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:33:29 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int		ft_img_size(int width, int height)
 
 void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
 {
-	static int k = 0;
+	static int k = 1;
 
 	//printf("k = %d\n", k);
-	if ((k % map->nb_col == 0) && current)
+	if ((k % (map->nb_col + 1) == 0) && current)
 	{
 		fdf->x2 = current->x;
 		fdf->y2 = current->y;
 		fdf->z2 = current->z;
-		k = 0;
+		k = 1;
 		return ;
 	}
 	if (!current)
@@ -46,8 +46,7 @@ void	set_down(t_map *map, t_env *fdf, t_pixel *current, void (*set_coord[2])(t_e
 	fdf->y1 = current->y;
 	fdf->z1 = current->z;
 	get_under_node(fdf, map, current);
-	printf("x2 : %d\n", fdf->x2);
-
+	printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", fdf->x1, fdf->y1, fdf->x2, fdf->y2);
 	/*printf("-------Down------------\n");
 	printf("X1:%d\n", fdf->x1);
 	printf("X2:%d\n", fdf->x2);
@@ -130,7 +129,6 @@ void	fill_pixel(t_env *fdf, int x, int y, int color)
 
 void segment(t_env *fdf, int color)
 {
-	//	printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", x1, y1, x2, y2);
 	int dx,dy,i,xinc,yinc,cumul,x,y;
 	i = 1;
 	x = fdf->x1;

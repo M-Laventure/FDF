@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/09 17:01:38 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:33:32 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int		main(int argc, char **argv)
 	i = 0;
 	k = 1;
 	// tools
-	fdf.x_start = 200;
-	fdf.y_start = 200;
+	fdf.x_start = 500;
+	fdf.y_start = 500;
 	fdf.x_gap = 50;
 	fdf.y_gap = 50;
 	fdf.width = 2160;
 	fdf.height = 1440;
-	fdf.proj_type = 1;
+	fdf.proj_type = 0;
 	fdf.x1 = 0;
 	fdf.x2 = 0;
 	fdf.y1 = 0;
@@ -64,11 +64,9 @@ int		main(int argc, char **argv)
 	  i++;
 
 	}*/
-	printf("HERE\n");
 	draw(map->p_alpha, map, &fdf);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
 	close(fd);
 	mlx_loop(fdf.mlx_ptr);
-	//printf("HERE\n");
 	return (0);
 }
