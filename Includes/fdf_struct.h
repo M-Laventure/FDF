@@ -5,12 +5,29 @@
 # define CTE2 0.5 
 # include "fdf.h"
 
+typedef struct s_pixel
+{
+                unsigned int color;
+                int z;
+                int x;
+                int y;
+                struct s_pixel *next;
+}              t_pixel;
+
+typedef struct  s_map
+{
+                t_pixel *p_alpha;
+                int nb_lines;
+                int nb_col;
+                int map_size;
+}               t_map;
+
 typedef struct  s_env
 {
                 void *mlx_ptr;
                 void *win_ptr;
                 void *img_ptr;
-                unsigned int *img_data;
+                int *img_data;
                 int bits_per_pixel;
                 int size_line;
                 int width;
@@ -28,23 +45,7 @@ typedef struct  s_env
 				int z2;
 				int x2;
 				int y2;
+                t_map *map;
 }               t_env;
-
-typedef struct s_pixel
-{
-                unsigned int color;
-                int z;
-                int x;
-                int y;
-                struct s_pixel *next;
-}              t_pixel;
-
-typedef struct  s_map
-{
-                t_pixel *p_alpha;
-                int nb_lines;
-                int nb_col;
-                int map_size;
-}               t_map;
 
 #endif
