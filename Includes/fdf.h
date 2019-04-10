@@ -29,6 +29,7 @@ t_pixel *ft_get_pixel(char *str, t_map *map, t_env *fdf);
 t_pixel *ft_init_pix();
 void	fill_pixel(t_env *fdf, int x, int y, int color);
 t_pixel *pushback(t_env *fdf, t_map *map, char *point, t_pixel *tmp);
+void	add_start(t_pixel *start, int gap, int way, int mod);
 
 
 #endif

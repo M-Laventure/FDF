@@ -29,6 +29,8 @@ typedef struct  s_env
                 void *img_ptr;
                 int *img_data;
                 int bits_per_pixel;
+                int stop;
+                int gap;
                 int size_line;
                 int width;
                 int height;

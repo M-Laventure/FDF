@@ -13,12 +13,20 @@
 #include "../Includes/fdf.h"
 #include <stdio.h>
 
-int key_press(int keycode, void *param)
+int key_press(t_map *map, int keycode, void *param)
 {
 	t_env *fdf;
 	void *img;
 
 	fdf = param;
+	printf("%i\n", keycode);
+	if (keycode == 53)
+	{
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+		mlx_destroy_window (fdf->mlx_ptr, fdf->win_ptr);
+		return (0);
+	}
 	if (keycode == 123)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
@@ -26,7 +34,41 @@ int key_press(int keycode, void *param)
 		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
 		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
 		fdf->img_ptr = img;
-		fdf->x_start -= 10;
+		add_start(map->p_alpha, fdf->gap, 0, -1);
+		draw(fdf->map->p_alpha, fdf->map, fdf);
+		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+	}
+	if (keycode == 124)
+	{
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
+		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
+		fdf->img_ptr = img;
+		add_start(map->p_alpha, fdf->gap, 0, 1);
+		draw(fdf->map->p_alpha, fdf->map, fdf);
+		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);	
+		printf("right\n");
+	}
+	if (keycode == 125)
+	{
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
+		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
+		fdf->img_ptr = img;
+		add_start(map->p_alpha, fdf->gap, 1, -1);
+		draw(fdf->map->p_alpha, fdf->map, fdf);
+		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+	}
+	if (keycode == 126)
+	{
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
+		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
+		fdf->img_ptr = img;
+		add_start(map->p_alpha, fdf->gap, 1, 1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	}
@@ -56,6 +98,7 @@ int		main(int argc, char **argv)
 	fdf.y_start = 500;
 	fdf.x_gap = 50;
 	fdf.y_gap = 50;
+	fdf.gap = 10;
 	fdf.width = 2160;
 	fdf.height = 1440;
 	fdf.proj_type = 1;

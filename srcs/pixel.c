@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/09 17:33:29 by brobson          ###   ########.fr       */
+/*   Updated: 2019/04/09 17:35:01 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,26 @@ int		ft_img_size(int width, int height)
 	return (size);
 }
 
+void	add_start(t_pixel *start, int gap, int way, int mod)
+{
+	if (!start)
+		return ;
+	if (way == 0)
+	{
+		start->x += gap * mod;
+		add_start(start->next, gap, way, mod);
+	}
+	else
+	{
+		start->y += gap * mod;
+		add_start(start->next, gap, way, mod);
+	}	
+}
+
 void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
 {
 	static int k = 1;
 
-	//printf("k = %d\n", k);
 	if ((k % (map->nb_col + 1) == 0) && current)
 	{
 		fdf->x2 = current->x;
@@ -35,7 +50,6 @@ void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
 	}
 	if (!current)
 		return ;
-	//printf("k = %d\n", k);
 	k++;
 	get_under_node(fdf, map, current->next);
 }
@@ -46,7 +60,7 @@ void	set_down(t_map *map, t_env *fdf, t_pixel *current, void (*set_coord[2])(t_e
 	fdf->y1 = current->y;
 	fdf->z1 = current->z;
 	get_under_node(fdf, map, current);
-	printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", fdf->x1, fdf->y1, fdf->x2, fdf->y2);
+	//printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", fdf->x1, fdf->y1, fdf->x2, fdf->y2);
 	/*printf("-------Down------------\n");
 	printf("X1:%d\n", fdf->x1);
 	printf("X2:%d\n", fdf->x2);
@@ -99,16 +113,15 @@ void	draw(t_pixel *current, t_map *map, t_env *fdf)
 
 	i = 1;
 	j = 1;
-
 	void (*set_coord[2])(t_env *) = {set_coord_iso, set_coord_para};
 	while (current)
 	{
-		printf("current_x : %d\n", current->x);
+		//printf("current_x : %d\n", current->x);
 		if (i % map->nb_col == 0 && j % map->nb_lines != 0)
 		{
 			j++;
 			set_down(map, fdf, current, set_coord);
-			printf("\n");
+			//printf("\n");
 		}
 		if (i % map->nb_col != 0 && j % map->nb_lines != 0)
 		{
