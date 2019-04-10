@@ -13,13 +13,57 @@
 #include "../Includes/fdf.h"
 #include <stdio.h>
 
-int key_press(t_map *map, int keycode, void *param)
+/*void zoom(t_env *fdf, int keycode)
+{
+    void *img;
+
+    if (keycode == 6)
+    {
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
+		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
+		fdf->img_ptr = img;
+		fdf->zoom += 5;
+		draw(fdf->map->p_alpha, fdf->map, fdf);
+		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+    }
+    else if (keycode == 2)
+    {
+		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
+		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
+		fdf->img_ptr = img;
+		fdf->zoom -= 5;
+		draw(fdf->map->p_alpha, fdf->map, fdf);
+		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+    }
+}*/
+
+void new_alt(t_env *fdf, int keycode)
+{
+	void *img;
+
+	mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
+	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+	fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
+	img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
+	fdf->img_ptr = img;
+	if (keycode == 0)
+		add_start(fdf->map->p_alpha, fdf->gap_move, 2, 1);
+	else
+		add_start(fdf->map->p_alpha, fdf->gap_move, 2, -1);
+	draw(fdf->map->p_alpha, fdf->map, fdf);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+}
+
+int key_press(int keycode, void *param)
 {
 	t_env *fdf;
 	void *img;
 
 	fdf = param;
-	printf("%i\n", keycode);
 	if (keycode == 53)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
@@ -27,51 +71,54 @@ int key_press(t_map *map, int keycode, void *param)
 		mlx_destroy_window (fdf->mlx_ptr, fdf->win_ptr);
 		return (0);
 	}
-	if (keycode == 123)
+	else if (keycode == 123)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
 		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
 		fdf->img_ptr = img;
-		add_start(map->p_alpha, fdf->gap, 0, -1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 0, -1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	}
-	if (keycode == 124)
+	else if (keycode == 124)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
 		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
 		fdf->img_ptr = img;
-		add_start(map->p_alpha, fdf->gap, 0, 1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 0, 1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);	
-		printf("right\n");
 	}
-	if (keycode == 125)
+	else if (keycode == 125)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
 		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
 		fdf->img_ptr = img;
-		add_start(map->p_alpha, fdf->gap, 1, -1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 1, 1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	}
-	if (keycode == 126)
+	else if (keycode == 126)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
 		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
 		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
 		fdf->img_ptr = img;
-		add_start(map->p_alpha, fdf->gap, 1, 1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 1, -1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	}
+	/*else if (keycode == 6 || keycode == 2)
+		zoom(fdf, keycode);*/
+	else if (keycode == 0 || keycode == 3)
+		new_alt(fdf, keycode);
 	return (0);
 }
 
@@ -90,17 +137,16 @@ int		main(int argc, char **argv)
 	}
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 		return (-1);
-	// tools 
 	i = 0;
 	k = 1;
-	// tools
 	fdf.x_start = 500;
 	fdf.y_start = 500;
-	fdf.x_gap = 50;
-	fdf.y_gap = 50;
-	fdf.gap = 10;
-	fdf.width = 2160;
-	fdf.height = 1440;
+	fdf.x_gap = 5;
+	fdf.y_gap = 5;
+	fdf.gap_move = 10;
+	fdf.zoom = 0;
+	fdf.width = 4000;
+	fdf.height = 4000;
 	fdf.proj_type = 1;
 	fdf.x1 = 0;
 	fdf.x2 = 0;
@@ -129,7 +175,7 @@ int		main(int argc, char **argv)
 	  i++;
 
 	  }*/
-	draw(map->p_alpha, map, &fdf);
+	draw(fdf.map->p_alpha, map, &fdf);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
 	close(fd);
 	mlx_hook(fdf.win_ptr, 2, 1L << 0, key_press, &fdf);

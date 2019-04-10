@@ -29,11 +29,17 @@ void	add_start(t_pixel *start, int gap, int way, int mod)
 		start->x += gap * mod;
 		add_start(start->next, gap, way, mod);
 	}
-	else
+	else if (way == 1)
 	{
 		start->y += gap * mod;
 		add_start(start->next, gap, way, mod);
-	}	
+	}
+	else
+	{
+		if (start->z != 0)
+			start->y += gap * mod;
+		add_start(start->next, gap, way, mod);
+	}
 }
 
 void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
@@ -54,12 +60,12 @@ void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
 	get_under_node(fdf, map, current->next);
 }
 
-void	set_down(t_map *map, t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
+void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 {
 	fdf->x1 = current->x;
 	fdf->y1 = current->y;
 	fdf->z1 = current->z;
-	get_under_node(fdf, map, current);
+	get_under_node(fdf, fdf->map, current);
 	//printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", fdf->x1, fdf->y1, fdf->x2, fdf->y2);
 	/*printf("-------Down------------\n");
 	printf("X1:%d\n", fdf->x1);
@@ -120,12 +126,12 @@ void	draw(t_pixel *current, t_map *map, t_env *fdf)
 		if (i % map->nb_col == 0 && j % map->nb_lines != 0)
 		{
 			j++;
-			set_down(map, fdf, current, set_coord);
+			set_down(fdf, current, set_coord);
 			//printf("\n");
 		}
 		if (i % map->nb_col != 0 && j % map->nb_lines != 0)
 		{
-			set_down(map, fdf, current, set_coord);
+			set_down(fdf, current, set_coord);
 			set_right(fdf, current, set_coord);
 		}
 		if (j % map->nb_lines == 0 && i % map->nb_col != 0)

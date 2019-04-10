@@ -30,7 +30,8 @@ typedef struct  s_env
                 int *img_data;
                 int bits_per_pixel;
                 int stop;
-                int gap;
+                int gap_move;
+                int zoom;
                 int size_line;
                 int width;
                 int height;
