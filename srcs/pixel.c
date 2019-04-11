@@ -143,6 +143,13 @@ void	draw(t_pixel *current, t_map *map, t_env *fdf)
 
 void	fill_pixel(t_env *fdf, int x, int y, int color)
 {
+	//printf("BEFOREy : %d\n", y);
+	if (y > fdf->height)
+		y = (y % fdf->height);
+	else if (y < 0)
+		y = fdf->height + (y % fdf->height);
+		//y = y - fdf->height;*/
+	//printf("AFTERy : %d\n", y);
 	fdf->img_data[(y * fdf->width) + x] = color;
 }
 

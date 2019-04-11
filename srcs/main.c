@@ -71,7 +71,7 @@ int key_press(int keycode, void *param)
 		mlx_destroy_window (fdf->mlx_ptr, fdf->win_ptr);
 		return (0);
 	}
-	else if (keycode == 123)
+	if (keycode == 123)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
@@ -141,12 +141,12 @@ int		main(int argc, char **argv)
 	k = 1;
 	fdf.x_start = 500;
 	fdf.y_start = 500;
-	fdf.x_gap = 5;
-	fdf.y_gap = 5;
+	fdf.x_gap = 10;
+	fdf.y_gap = 10;
 	fdf.gap_move = 10;
 	fdf.zoom = 0;
-	fdf.width = 4000;
-	fdf.height = 4000;
+	fdf.width = 1000;
+	fdf.height = 1000;
 	fdf.proj_type = 1;
 	fdf.x1 = 0;
 	fdf.x2 = 0;
