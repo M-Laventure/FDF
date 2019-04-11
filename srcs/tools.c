@@ -6,11 +6,27 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/09 13:26:59 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/11 17:30:54 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
+
+int		ft_img_size(int width, int height)
+{
+	int size;
+
+	size = width * height;
+	return (size);
+}
+
+void	clear_window(t_env *fdf, int mod)
+{
+	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
+	empty_tab(fdf);
+	if (mod == 1)
+		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
+}
 
 int ft_strlen_tab(char **tab)
 {
@@ -87,7 +103,7 @@ t_map *ft_init_map(int fd, t_env *fdf)
 	map->p_alpha->y = fdf->y_start;
 	map->p_alpha->next = NULL;
 	ft_strdel(&line);
-//	ft_tabdel(tmp_line);
+	//	ft_tabdel(tmp_line);
 	return (map);
 }
 
@@ -97,7 +113,7 @@ int ft_parsing(char *line)
 	char	*pre_coma;
 	int		len;
 	int		i;
-	
+
 	len = 0;
 	i = 0;
 	if (ft_strchr(line, ',') != NULL)
@@ -136,4 +152,23 @@ int ft_parsing(char *line)
 		}
 	}
 	return (1);
+}
+
+void    empty_tab(t_env *fdf)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while (x < fdf->width)
+	{
+		while (y < fdf->height)
+		{
+			fdf->img_data[(y * fdf->width) + x] = 0;
+			y++;
+		}
+		y = 0;
+		x++;
+	}
 }

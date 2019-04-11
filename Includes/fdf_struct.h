@@ -22,6 +22,8 @@ typedef struct  s_map
                 int map_size;
 }               t_map;
 
+
+
 typedef struct  s_env
 {
                 void *mlx_ptr;
@@ -32,6 +34,7 @@ typedef struct  s_env
                 int stop;
                 int gap_move;
                 int zoom;
+				int theta;
                 int size_line;
                 int width;
                 int height;
