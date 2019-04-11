@@ -13,43 +13,10 @@
 #include "../Includes/fdf.h"
 #include <stdio.h>
 
-/*void zoom(t_env *fdf, int keycode)
-{
-    void *img;
-
-    if (keycode == 6)
-    {
-		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
-		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-		fdf->img_ptr = img;
-		fdf->zoom += 5;
-		draw(fdf->map->p_alpha, fdf->map, fdf);
-		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
-    }
-    else if (keycode == 2)
-    {
-		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
-		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-		fdf->img_ptr = img;
-		fdf->zoom -= 5;
-		draw(fdf->map->p_alpha, fdf->map, fdf);
-		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
-    }
-}*/
-
 void new_alt(t_env *fdf, int keycode)
 {
-	void *img;
-
-	mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-	fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-	img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-	fdf->img_ptr = img;
+	empty_tab(fdf);
 	if (keycode == 0)
 		add_start(fdf->map->p_alpha, fdf->gap_move, 2, 1);
 	else
@@ -61,56 +28,43 @@ void new_alt(t_env *fdf, int keycode)
 int key_press(int keycode, void *param)
 {
 	t_env *fdf;
-	void *img;
 
 	fdf = param;
 	if (keycode == 53)
 	{
 		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		mlx_destroy_window (fdf->mlx_ptr, fdf->win_ptr);
+		mlx_destroy_window(fdf->mlx_ptr, fdf->win_ptr);
 		return (0);
 	}
 	if (keycode == 123)
 	{
-		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-		fdf->img_ptr = img;
+		empty_tab(fdf);
 		add_start(fdf->map->p_alpha, fdf->gap_move, 0, -1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	}
 	else if (keycode == 124)
 	{
-		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-		fdf->img_ptr = img;
+		empty_tab(fdf);
 		add_start(fdf->map->p_alpha, fdf->gap_move, 0, 1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);	
 	}
 	else if (keycode == 125)
 	{
-		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-		fdf->img_ptr = img;
+		empty_tab(fdf);
 		add_start(fdf->map->p_alpha, fdf->gap_move, 1, 1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	}
 	else if (keycode == 126)
 	{
-		mlx_destroy_image(fdf->mlx_ptr, fdf->img_ptr);
 		mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
-		fdf->img_data = (int *)mlx_get_data_addr(fdf->img_ptr, &(fdf->bits_per_pixel), &(fdf->size_line), &(fdf->endian));
-		img = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-		fdf->img_ptr = img;
+		empty_tab(fdf);
 		add_start(fdf->map->p_alpha, fdf->gap_move, 1, -1);
 		draw(fdf->map->p_alpha, fdf->map, fdf);
 		mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
@@ -158,23 +112,10 @@ int		main(int argc, char **argv)
 	fdf.mlx_ptr = mlx_init();
 	fdf.win_ptr = mlx_new_window(fdf.mlx_ptr, fdf.width, fdf.height, "fdf");
 	fdf.img_ptr = mlx_new_image(fdf.mlx_ptr, fdf.width, fdf.height);
-	fdf.img_data = (int *)mlx_get_data_addr(fdf.img_ptr, &fdf.bits_per_pixel, &fdf.size_line , &fdf.endian);
+	fdf.img_data = (unsigned int *)mlx_get_data_addr(fdf.img_ptr, &fdf.bits_per_pixel, &fdf.size_line , &fdf.endian);
 	if (!(map = ft_get_map(fd, &fdf)))
 		return (-1);
 	fdf.map = map;
-	/*printf("map_size%d\n", map->map_size);
-	  while (map->p_alpha)
-	  {
-	  if (i % (map->nb_col) == 0 && i != 0)
-	  printf("\n");
-	  printf("x%d : %d ", k, map->p_alpha->x);
-	  printf("y%d : %d -", k, map->p_alpha->y);
-	  printf(" ");
-	  map->p_alpha = (map->p_alpha)->next;
-	  k++;
-	  i++;
-
-	  }*/
 	draw(fdf.map->p_alpha, map, &fdf);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
 	close(fd);

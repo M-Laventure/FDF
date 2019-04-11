@@ -12,6 +12,25 @@
 
 #include "../Includes/fdf.h"
 
+void	empty_tab(t_env *fdf)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while (x < fdf->width)
+	{
+		while (y < fdf->height)
+		{
+			fdf->img_data[(y * fdf->width) + x] = 0;
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+}
+
 int ft_strlen_tab(char **tab)
 {
 	int i;

@@ -27,7 +27,7 @@ typedef struct  s_env
                 void *mlx_ptr;
                 void *win_ptr;
                 void *img_ptr;
-                int *img_data;
+                unsigned int *img_data;
                 int bits_per_pixel;
                 int stop;
                 int gap_move;

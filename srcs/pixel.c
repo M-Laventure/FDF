@@ -66,13 +66,6 @@ void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 	fdf->y1 = current->y;
 	fdf->z1 = current->z;
 	get_under_node(fdf, fdf->map, current);
-	//printf("x1 : %d y1 : %d x2 : %d y2 : %d\n", fdf->x1, fdf->y1, fdf->x2, fdf->y2);
-	/*printf("-------Down------------\n");
-	printf("X1:%d\n", fdf->x1);
-	printf("X2:%d\n", fdf->x2);
-	printf("Y1:%d\n", fdf->y1);
-	printf("Y2:%d\n", fdf->y2);*/
-
 	set_coord[fdf->proj_type](fdf);
 	segment(fdf, current->color);
 }
@@ -82,9 +75,7 @@ void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 	fdf->x1 = current->x;
 	fdf->y1 = current->y;
 	fdf->z1 = current->z;
-//	printf("current->x : %d\n", fdf->x1);
 	fdf->x2 = (current->next)->x;
-//	printf("current_next->x : %d\n", fdf->x2);
 	fdf->y2 = (current->next)->y;
 	fdf->z2 = (current->next)->z;
 	set_coord[fdf->proj_type](fdf);
@@ -122,12 +113,10 @@ void	draw(t_pixel *current, t_map *map, t_env *fdf)
 	void (*set_coord[2])(t_env *) = {set_coord_iso, set_coord_para};
 	while (current)
 	{
-		//printf("current_x : %d\n", current->x);
 		if (i % map->nb_col == 0 && j % map->nb_lines != 0)
 		{
 			j++;
 			set_down(fdf, current, set_coord);
-			//printf("\n");
 		}
 		if (i % map->nb_col != 0 && j % map->nb_lines != 0)
 		{
@@ -143,13 +132,10 @@ void	draw(t_pixel *current, t_map *map, t_env *fdf)
 
 void	fill_pixel(t_env *fdf, int x, int y, int color)
 {
-	//printf("BEFOREy : %d\n", y);
 	if (y > fdf->height)
 		y = (y % fdf->height);
 	else if (y < 0)
 		y = fdf->height + (y % fdf->height);
-		//y = y - fdf->height;*/
-	//printf("AFTERy : %d\n", y);
 	fdf->img_data[(y * fdf->width) + x] = color;
 }
 
