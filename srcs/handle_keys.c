@@ -4,9 +4,9 @@
 void 	handle_zoom(t_env *fdf, int keycode)
 {
 	if (keycode == 6)
-		fdf->zoom += 1;
+		fdf->zoom += 2;
 	else if (keycode == 2)
-		fdf->zoom -= 5;
+		fdf->zoom -= 2;
 }
 
 void	rotate_x(t_pixel *start, t_env *fdf)

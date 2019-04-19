@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/11 20:09:32 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/19 18:31:56 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
 
 void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 {
-	static int i = 0;
+	static int i = 1;
 
 	fdf->x1 = current->x;
 	fdf->y1 = current->y;
@@ -64,18 +64,19 @@ void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 	get_under_node(fdf, fdf->map, current);
 	if (fdf->zoom != 0)
 	{
-		fdf->x1 = fdf->x1 * ((i % fdf->map->nb_col) * fdf->zoom);
-		fdf->x2 = fdf->x2 * ((i % fdf->map->nb_col) * fdf->zoom);
-		fdf->y1 = fdf->y1 * ((i / fdf->map->nb_col) * fdf->zoom);
-		fdf->y2 = fdf->y2 * fdf->zoom;
+		fdf->x1 = fdf->x1 *fdf->zoom;
+		fdf->x2 = fdf->x2 *fdf->zoom;
+		fdf->y1 = fdf->y1 *fdf->zoom;
+		fdf->y2 = fdf->y2 *fdf->zoom;
 	}
+	i++;
 	set_coord[fdf->proj_type](fdf);
 	segment(fdf, current->color);
 }
 
 void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 {
-	static int i = 0;
+	static int i = 1;
 
 	fdf->x1 = current->x;
 	fdf->y1 = current->y;
@@ -85,11 +86,23 @@ void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 	fdf->z2 = (current->next)->z;
 	if (fdf->zoom != 0)
 	{
-		fdf->x1 = fdf->x1 * ((i % fdf->map->nb_col) * fdf->zoom);
+		fdf->x1 = fdf->x1 * fdf->zoom;
+		fdf->y1 = fdf->y1 * fdf->zoom;
 		fdf->x2 = fdf->x2 * fdf->zoom;
-		fdf->y1 = fdf->y1 + ((i / fdf->map->nb_col) * fdf->zoom);
-		fdf->y2 = fdf->y2 + ((i / fdf->map->nb_col) * fdf->zoom);
+		fdf->y2 = fdf->y2 * fdf->zoom;
 	}
+	/*
+		if (i == 0)
+			fdf->x2 = fdf->x2 * fdf->zoom;
+		else if ((i / fdf->map->nb_col - 1) != 0)
+		{
+			fdf->y1 = fdf->y1 * fdf->zoom;
+			fdf->y2 = fdf->y2 * fdf->zoom;
+		}
+	}
+	//		fdf->y1 = fdf->y1 * fdf->zoom;
+	//		fdf->y2 = fdf->y2 * fdf->zoom;
+		//fdf->y1 = fdf->y1 * ((i / fdf->map->nb_col) == 0 ? (1) : (fdf->zoom));*/
 	i++;
 	set_coord[fdf->proj_type](fdf);
 	segment(fdf, current->color);
