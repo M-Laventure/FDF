@@ -75,7 +75,7 @@ void ft_tabdel(char **tab)
 }
 
 void ft_pxl_pushback(t_pixel *begin, t_pixel *node)
-{	
+{
 	if (begin->next == NULL)
 		begin->next = node;
 	else

@@ -38,6 +38,8 @@ typedef struct  s_env
                 int size_line;
                 int width;
                 int height;
+                int img_width;
+                int img_height;
                 int size_img;
                 int endian;
 				int x_gap;
