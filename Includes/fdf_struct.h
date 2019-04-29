@@ -1,9 +1,17 @@
 #ifndef FDF_STRUCT_H
 # define FDF_STRUCT_H
-# define PROJ(x) x == 1 ? (1) : (0)
+# define PROJ(x) x == 1 ? (0) : (1)
 # define CTE1 0.5
 # define CTE2 0.5 
+# define MENU "move : [arrow keys]\nZoom : [+/-]\nSwitch proj: [p], Change colors: [r, g , b]\nIncrease or Decrease z [a, f]"
 # include "fdf.h"
+
+typedef struct s_rgb
+{
+	int r;
+	int g;
+	int b;
+}				t_rgb;
 
 typedef struct s_pixel
 {
@@ -54,6 +62,7 @@ typedef struct  s_env
 				int x2;
 				int y2;
                 t_map *map;
+				t_rgb *add_color;
 }               t_env;
 
 #endif

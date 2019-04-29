@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/28 16:05:47 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/19 18:31:56 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:41:40 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ void	get_under_node(t_env *fdf, t_map *map, t_pixel *current)
 	get_under_node(fdf, map, current->next);
 }
 
-void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
+void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *), int *i)
 {
-	static int i = 1;
 
 	fdf->x1 = current->x;
 	fdf->y1 = current->y;
@@ -64,20 +63,19 @@ void	set_down(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 	get_under_node(fdf, fdf->map, current);
 	if (fdf->zoom != 0)
 	{
-		fdf->x1 = fdf->x1 *fdf->zoom;
-		fdf->x2 = fdf->x2 *fdf->zoom;
-		fdf->y1 = fdf->y1 *fdf->zoom;
+		if (*i + 1 % fdf->map->nb_col != 0)
+			fdf->x1 = fdf->x1 *fdf->zoom;
+		if (*i / fdf->map->nb_col + 1 > 0)
+			fdf->y1 = fdf->y1 *fdf->zoom;
 		fdf->y2 = fdf->y2 *fdf->zoom;
+		fdf->x2 = fdf->x1;
 	}
-	i++;
 	set_coord[fdf->proj_type](fdf);
 	segment(fdf, current->color);
 }
 
-void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
+void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *), int *i)
 {
-	static int i = 1;
-
 	fdf->x1 = current->x;
 	fdf->y1 = current->y;
 	fdf->z1 = current->z;
@@ -86,24 +84,15 @@ void	set_right(t_env *fdf, t_pixel *current, void (*set_coord[2])(t_env *))
 	fdf->z2 = (current->next)->z;
 	if (fdf->zoom != 0)
 	{
-		fdf->x1 = fdf->x1 * fdf->zoom;
-		fdf->y1 = fdf->y1 * fdf->zoom;
-		fdf->x2 = fdf->x2 * fdf->zoom;
-		fdf->y2 = fdf->y2 * fdf->zoom;
-	}
-	/*
-		if (i == 0)
-			fdf->x2 = fdf->x2 * fdf->zoom;
-		else if ((i / fdf->map->nb_col - 1) != 0)
+		if (*i + 1 % fdf->map->nb_col != 0)
+			fdf->x1 = fdf->x1 * fdf->zoom;
+		if (*i / fdf->map->nb_col + 1 > 0)
 		{
-			fdf->y1 = fdf->y1 * fdf->zoom;
+		   	fdf->y1 = fdf->y1 * fdf->zoom;
 			fdf->y2 = fdf->y2 * fdf->zoom;
 		}
+		fdf->x2 = fdf->x2 * fdf->zoom;
 	}
-	//		fdf->y1 = fdf->y1 * fdf->zoom;
-	//		fdf->y2 = fdf->y2 * fdf->zoom;
-		//fdf->y1 = fdf->y1 * ((i / fdf->map->nb_col) == 0 ? (1) : (fdf->zoom));*/
-	i++;
 	set_coord[fdf->proj_type](fdf);
 	segment(fdf, current->color);
 }
@@ -178,31 +167,21 @@ void    draw(t_pixel *current, t_map *map, t_env *fdf)
         if (i % map->nb_col == 0 && j % map->nb_lines != 0)
         {
             j++;
-            set_down(fdf, current, set_coord);
+            set_down(fdf, current, set_coord, &i);
         }
         if (i % map->nb_col != 0 && j % map->nb_lines != 0)
         {
-            set_down(fdf, current, set_coord);
-        	set_right(fdf, current, set_coord);
+            set_down(fdf, current, set_coord, &i);
+        	set_right(fdf, current, set_coord, &i);
         }
         if (j % map->nb_lines == 0 && i % map->nb_col != 0)
-            set_right(fdf, current, set_coord);
+            set_right(fdf, current, set_coord, &i);
         current = current->next;
         i++;
     }
 }
 
-void	fill_pixel(t_env *fdf, int x, int y, int color)
-{
-	if (y > fdf->height)
-		y = (y % fdf->height);
-	else if (y < 0)
-		y = fdf->height + (y % fdf->height);
-	//printf("x = %d <> y = %d\n", x, y);
-	fdf->img_data[(y * fdf->width) + x] = color;
-}
-
-void segment(t_env *fdf, int color)
+void segment(t_env *fdf, unsigned int color)
 {
 	int dx,dy,i,xinc,yinc,cumul,x,y;
 	i = 1;
@@ -214,7 +193,6 @@ void segment(t_env *fdf, int color)
 	yinc = ( dy > 0 ) ? 1 : -1;
 	dx = abs(dx);
 	dy = abs(dy);
-	//printf("1er point => x : %d et y : %d\n", x, y);
 	fill_pixel(fdf, x , y, color);
 	if (dx > dy)
 	{

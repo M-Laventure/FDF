@@ -6,11 +6,12 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/11 20:09:29 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/29 19:41:32 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
+
 
 int		main(int argc, char **argv)
 {
@@ -35,7 +36,7 @@ int		main(int argc, char **argv)
 	fdf.y_gap = 10;
 	fdf.gap_move = 10;
 	fdf.zoom = 0;
-	fdf.width = 1500;
+	fdf.width = 3000;
 	fdf.height = 3000;
 	fdf.proj_type = 1;
 	fdf.x1 = 0;
@@ -52,7 +53,9 @@ int		main(int argc, char **argv)
 	fdf.img_data = (int *)mlx_get_data_addr(fdf.img_ptr, &fdf.bits_per_pixel, &fdf.size_line, &fdf.endian);
 	if (!(map = ft_get_map(fd, &fdf)))
 		return (-1);
+	
 	fdf.map = map;
+	fdf.add_color = (t_rgb *)malloc(sizeof(t_rgb));
 	/*printf("map_size%d\n", map->map_size);
 	  while (map->p_alpha)
 	  {
@@ -65,10 +68,11 @@ int		main(int argc, char **argv)
 	  k++;
 	  i++;
 	  }*/
-	draw(fdf.map->p_alpha, fdf.map, &fdf);
 	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
 	close(fd);
 	mlx_hook(fdf.win_ptr, 2, 1L << 0, key_press, &fdf);
+	draw(fdf.map->p_alpha, fdf.map, &fdf);
+	mlx_string_put(fdf.mlx_ptr, fdf.win_ptr, -100, 0, 0xffd700, MENU);
 	mlx_loop(fdf.mlx_ptr);
 	return (0);
 }

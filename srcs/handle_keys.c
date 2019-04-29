@@ -1,12 +1,23 @@
 #include "../Includes/fdf.h"
 #include "stdio.h"
 
+void	handle_color(t_env *fdf, int keycode)
+{
+	ft_bzero(fdf->add_color, sizeof(t_rgb));
+	if (keycode == 15)
+		fdf->add_color->r += 50;
+	if (keycode == 5)
+		fdf->add_color->g += 50;
+	if (keycode == 8)
+		fdf->add_color->b += 50;
+}
+
 void 	handle_zoom(t_env *fdf, int keycode)
 {
 	if (keycode == 6)
-		fdf->zoom += 2;
+		fdf->zoom += 1;
 	else if (keycode == 2)
-		fdf->zoom -= 2;
+		fdf->zoom -= 1;
 }
 
 void	rotate_x(t_pixel *start, t_env *fdf)
@@ -98,20 +109,21 @@ int 	key_press(int keycode, void *param)
 	else
 		clear_window(fdf, 0);
 	if (keycode == 123 || keycode == 124 || keycode == 125 || keycode == 126)
-	{
-		//printf("avant gauche\n");
 		handle_move(keycode, fdf);
-		//printf("apres gauche\n");
-	}
 	else if (keycode == 0 || keycode == 3)
 		handle_alt(fdf, keycode);
 	else if (keycode == 16 || keycode == 7 || keycode == 8)
 		handle_rotation(fdf, keycode);
 	else if (keycode == 6 || keycode == 2)
 		handle_zoom(fdf, keycode);
-	//printf("avant draww\n");
+	else if (keycode == 15 || keycode == 5 || keycode == 11)
+	{
+		printf("color\n");
+		handle_color(fdf, keycode);
+	}
+	else if (keycode == 35)
+		fdf->proj_type = PROJ(fdf->proj_type);
 	draw(fdf->map->p_alpha, fdf->map, fdf);
-	//printf("apres draww\n");
 	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
 	return (0);
 }

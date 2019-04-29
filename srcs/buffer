@@ -1,7 +1,11 @@
-int		ft_img_size(int width, int height)
+void	fill_pixel(t_env *fdf, int x, int y, int color)
 {
-	int size;
-
-	size = width * height;
-	return (size);
+	if (y > fdf->height)
+		y = (y % fdf->height);
+	else if (y < 0)
+		y = fdf->height + (y % fdf->height);
+	//printf("x = %d <> y = %d\n", x, y);
+	fdf->img_data[(y * fdf->width) + x] = color;
 }
+
+
