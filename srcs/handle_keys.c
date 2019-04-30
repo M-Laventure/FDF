@@ -125,5 +125,6 @@ int 	key_press(int keycode, void *param)
 		fdf->proj_type = PROJ(fdf->proj_type);
 	draw(fdf->map->p_alpha, fdf->map, fdf);
 	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+	put_menu(fdf);
 	return (0);
 }

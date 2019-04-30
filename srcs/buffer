@@ -1,11 +1,10 @@
-void	fill_pixel(t_env *fdf, int x, int y, int color)
+void	put_menu(t_env *fdf)
 {
-	if (y > fdf->height)
-		y = (y % fdf->height);
-	else if (y < 0)
-		y = fdf->height + (y % fdf->height);
-	//printf("x = %d <> y = %d\n", x, y);
-	fdf->img_data[(y * fdf->width) + x] = color;
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, -100, 0, 0xffd700, ARROWS);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, -100, 10, 0xffd700, ZOOM);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, -100, 20, 0xffd700, SWITCH);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, -100, 30, 0xffd700, COLORS);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, -100, 40, 0xffd700, Z);	
 }
 
 

@@ -3,7 +3,11 @@
 # define PROJ(x) x == 1 ? (0) : (1)
 # define CTE1 0.5
 # define CTE2 0.5 
-# define MENU "move : [arrow keys]\nZoom : [+/-]\nSwitch proj: [p], Change colors: [r, g , b]\nIncrease or Decrease z [a, f]"
+# define ARROWS "move : [arrow keys]"
+# define ZOOM "zoom: [+/-]"
+# define SWITCH "Switch proj: [p]"
+# define COLORS "Change colors:[r, g , b]"
+# define Z "Increase or Decrease z: [a, f]"
 # include "fdf.h"
 
 typedef struct s_rgb

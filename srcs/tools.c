@@ -6,11 +6,20 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/29 18:13:35 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/30 13:19:37 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
+
+void	put_menu(t_env *fdf)
+{
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 0, 0xffd700, ARROWS);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 20, 0xffd700, ZOOM);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 40, 0xffd700, SWITCH);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 60, 0xffd700, COLORS);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 80, 0xffd700, Z);	
+}
 
 int		ft_img_size(int width, int height)
 {

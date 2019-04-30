@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/04/29 19:41:32 by malavent         ###   ########.fr       */
+/*   Updated: 2019/04/30 12:25:59 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int		main(int argc, char **argv)
 		return (-1);
 	i = 0;
 	k = 1;
-	fdf.x_start = 50;
-	fdf.y_start = 50;
-	fdf.x_gap = 10;
+		fdf.x_gap = 10;
 	fdf.y_gap = 10;
 	fdf.gap_move = 10;
 	fdf.zoom = 0;
 	fdf.width = 3000;
 	fdf.height = 3000;
+	fdf.x_start = 1500;
+	fdf.y_start = 1000;
 	fdf.proj_type = 1;
 	fdf.x1 = 0;
 	fdf.x2 = 0;
@@ -68,11 +68,11 @@ int		main(int argc, char **argv)
 	  k++;
 	  i++;
 	  }*/
-	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0 ,0);
 	close(fd);
-	mlx_hook(fdf.win_ptr, 2, 1L << 0, key_press, &fdf);
 	draw(fdf.map->p_alpha, fdf.map, &fdf);
-	mlx_string_put(fdf.mlx_ptr, fdf.win_ptr, -100, 0, 0xffd700, MENU);
+	mlx_put_image_to_window(fdf.mlx_ptr, fdf.win_ptr, fdf.img_ptr, 0, 0);
+	put_menu(&fdf);
+	mlx_hook(fdf.win_ptr, 2, 1L << 0, key_press, &fdf);
 	mlx_loop(fdf.mlx_ptr);
 	return (0);
 }

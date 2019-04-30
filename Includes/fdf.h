@@ -9,6 +9,7 @@
 # include "mlx.h"
 # define RED  0xff0000
 
+void	put_menu(t_env *fdf);
 void	fill_pixel(t_env *fdf, int x, int y, unsigned int hex_color);
 void	clear_window(t_env *fdf, int mod);
 //void	draw(t_pixel *current, t_env *fdf);
