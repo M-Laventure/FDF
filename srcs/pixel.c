@@ -13,26 +13,25 @@
 #include "../Includes/fdf.h"
 #include <stdio.h>
 
-void	add_start(t_pixel *start, int gap, int way, int mod)
+void	add_start(t_pixel *start, int gap, int mod, int way)
 {
 	if (!start)
 		return ;
-	if (way == 0)
+	if (mod == 0)
 	{
-		start->x += gap * mod;
+		start->x += gap * way;
 		//printf("y : %d ", start->y);
-		add_start(start->next, gap, way, mod);
+		add_start(start->next, gap, mod, way);
 	}
-	else if (way == 1)
+	else if (mod == 1)
 	{
-		start->y += gap * mod;
-		add_start(start->next, gap, way, mod);
+		start->y += gap * way;
+		add_start(start->next, gap, mod, way);
 	}
 	else
 	{
-		if (start->z != 0)
-			start->y += gap * mod;
-		add_start(start->next, gap, way, mod);
+			start->y += (gap * (start->z * 0.1)) * way;
+		add_start(start->next, gap, mod, way);
 	}
 }
 
@@ -115,7 +114,7 @@ void	set_coord_iso(t_env *fdf)
 	fdf->x1 = (CTE1 * (fdf->x1)) - (CTE2 * (fdf->y1));
 	fdf->y1 = fdf->z1 + ((CTE1 / 2) * fdf->x1) + ((CTE2 / 2) * (fdf->y1));
 	fdf->x2 = (CTE1 * (fdf->x2)) - (CTE2 * (fdf->y2));
-	fdf->y2 = fdf->z2 + ((CTE1 / 2) * fdf->x2) + ((CTE2 / 2) * (fdf->y2));
+	fdf->y2 = fdf->z2  + ((CTE1 / 2) * fdf->x2) + ((CTE2 / 2) * (fdf->y2));
 }
 
 /*void	draw(t_pixel *current, t_env *fdf)
@@ -158,10 +157,11 @@ void    draw(t_pixel *current, t_map *map, t_env *fdf)
 {
     int j;
     int i;
+	void (*set_coord[2])(t_env *) = {set_coord_iso, set_coord_para};
 
     i = 1;
     j = 1;
-    void (*set_coord[2])(t_env *) = {set_coord_iso, set_coord_para};
+
     while (current)
     {
         if (i % map->nb_col == 0 && j % map->nb_lines != 0)

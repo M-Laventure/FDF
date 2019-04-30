@@ -34,8 +34,6 @@ typedef struct  s_map
                 int map_size;
 }               t_map;
 
-
-
 typedef struct  s_env
 {
                 void *mlx_ptr;

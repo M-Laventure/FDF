@@ -12,7 +12,6 @@
 
 #include "../Includes/fdf.h"
 
-
 int		main(int argc, char **argv)
 {
 	t_env   fdf;
@@ -36,12 +35,12 @@ int		main(int argc, char **argv)
 	fdf.zoom = 0;
 	fdf.width = 3000;
 	fdf.height = 3000;
-	fdf.x_start = 1500;
-	fdf.y_start = 1000;
+	fdf.x_start = 500;
+	fdf.y_start = 500;
 	fdf.proj_type = 1;
 	fdf.x1 = 0;
 	fdf.x2 = 0;
-	fdf.y1 = 0; 
+	fdf.y1 = 0;
 	fdf.y2 = 0;
 	fdf.z1 = 0;
 	fdf.z2 = 0;

@@ -79,9 +79,9 @@ void	handle_rotation(t_env *fdf, int keycode)
 void	handle_alt(t_env *fdf, int keycode)
 {
 	if (keycode == 0) // A
-		add_start(fdf->map->p_alpha, fdf->gap_move, 2, 1);
-	else if (keycode == 3) // F
 		add_start(fdf->map->p_alpha, fdf->gap_move, 2, -1);
+	else if (keycode == 3) // F
+		add_start(fdf->map->p_alpha, fdf->gap_move, 2, 1);
 }
 
 void	handle_move(int keycode, t_env *fdf)
