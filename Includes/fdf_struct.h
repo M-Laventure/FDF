@@ -1,8 +1,8 @@
 #ifndef FDF_STRUCT_H
 # define FDF_STRUCT_H
 # define PROJ(x) x == 1 ? (0) : (1)
-# define CTE1 0.5
-# define CTE2 0.9 
+# define CTE1 0.4
+# define CTE2 0.4 
 # define ARROWS "move : [arrow keys]"
 # define ZOOM "zoom: [+/-]"
 # define SWITCH "Switch proj: [p]"
@@ -34,14 +34,13 @@ typedef struct  s_map
                 int map_size;
 }               t_map;
 
-
-
 typedef struct  s_env
 {
                 void *mlx_ptr;
                 void *win_ptr;
                 void *img_ptr;
                 unsigned int *img_data;
+				char 	*arg;
                 int bpp;
                 int stop;
                 int gap_move;
@@ -62,6 +61,7 @@ typedef struct  s_env
 				int y1;
 				int z1;
 				int z2;
+				int fd;
 				int x2;
 				int y2;
                 t_map *map;

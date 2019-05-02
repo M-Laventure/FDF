@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/01 18:37:22 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/02 20:06:30 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ t_map *ft_init_map(int fd, t_env *fdf)
 	map->nb_lines = ft_nblines(fd) + 1;
 	map->nb_col =  ft_strlen_tab(tmp_line);
 	map->map_size = map->nb_lines * map->nb_col;
-	fdf->x_gap = map->nb_col;
-	fdf->y_gap = map->nb_lines;	
+	fdf->x_gap = 800 / map->nb_col;
+	fdf->y_gap = fdf->x_gap;
 	map->p_alpha = p_alpha;
 	map->p_alpha->x = fdf->x_start;
 	map->p_alpha->y = fdf->y_start;

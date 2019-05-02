@@ -7,9 +7,11 @@
 # include <math.h>
 # include "fdf_struct.h"
 # include "mlx.h"
-# define RED  0xff0000
+# include <stdio.h>
 
 void	put_menu(t_env *fdf);
+void	init_env(t_env *fdf);
+int 	init_fdf(t_env *fdf, char *fdf_map);
 void	fill_pixel(t_env *fdf, int x, int y, unsigned int hex_color);
 void	clear_window(t_env *fdf, int mod);
 //void	draw(t_pixel *current, t_env *fdf);
@@ -31,6 +33,6 @@ void	ft_pxl_pushback(t_pixel *begin, t_pixel *maillon);
 t_pixel *ft_get_pixel(char *str, t_map *map, t_env *fdf);
 t_pixel *ft_init_pix();
 t_pixel *pushback(t_env *fdf, t_map *map, char *point, t_pixel *tmp);
-void	add_start(t_pixel *start, int gap, int way, int mod);
+void	add_start(t_pixel *start, t_env *fdf, int gap, int way, int mod);
 void	empty_tab(t_env *fdf);
 #endif

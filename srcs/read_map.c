@@ -6,7 +6,7 @@
 /*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 10:22:22 by malavent          #+#    #+#             */
-/*   Updated: 2019/05/01 18:32:42 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/02 19:43:11 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ t_map *ft_get_map(int fd, t_env *fdf)
 		return (NULL);	
 	if (!(pix_line = ft_memalloc(sizeof(t_pixel *))))
 		return (NULL);
-	lseek(fd, 0, SEEK_SET);
+	close(fd);
+	fd = open(fdf->arg, O_RDONLY);
 	ft_get_next_line(fd, &ret_gnl);
 	if (!(pix_line = ft_get_line(map, ret_gnl, fdf)))
 		return (NULL);
@@ -103,7 +104,7 @@ t_map *ft_get_map(int fd, t_env *fdf)
 	while ((ft_get_next_line(fd, &ret_gnl) > 0))
 	{
 		if (!(pix_line = ft_get_line(map, ret_gnl, fdf)))
-			return (NULL);
+			exit(1);
 		ft_pxl_pushback((map->p_alpha)->next, pix_line);
 		y++;
 	}

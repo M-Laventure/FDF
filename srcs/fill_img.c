@@ -33,5 +33,5 @@ void    fill_pixel(t_env *fdf, int x, int y, unsigned int hex_color)
 		y = (y % fdf->height);
 	else if (y < 0)
 		y = fdf->height + (y % fdf->height);
-	fdf->img_data[y * fdf->width + x] = (hex_color == 0xffffff) ? (hex_color) : (hex_color - (y * 0.6));
+	fdf->img_data[y * fdf->width + x] = (hex_color == 0xffffff) ? (hex_color) : (hex_color - (y * 1.1));
 }
