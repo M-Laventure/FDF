@@ -13,7 +13,7 @@ void	put_menu(t_env *fdf);
 void	fill_pixel(t_env *fdf, int x, int y, unsigned int hex_color);
 void	clear_window(t_env *fdf, int mod);
 //void	draw(t_pixel *current, t_env *fdf);
-void    draw(t_pixel *current, t_map *map, t_env *fdf);
+void    draw(t_pixel *current, t_env *fdf);
 void	set_coord_iso(t_env *fdf);
 void	set_coord_para(t_env *fdf);
 int		key_press(int keycode, void *param);

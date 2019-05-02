@@ -2,7 +2,7 @@
 # define FDF_STRUCT_H
 # define PROJ(x) x == 1 ? (0) : (1)
 # define CTE1 0.5
-# define CTE2 0.5 
+# define CTE2 0.9 
 # define ARROWS "move : [arrow keys]"
 # define ZOOM "zoom: [+/-]"
 # define SWITCH "Switch proj: [p]"
@@ -41,18 +41,17 @@ typedef struct  s_env
                 void *mlx_ptr;
                 void *win_ptr;
                 void *img_ptr;
-                int *img_data;
-                int bits_per_pixel;
+                unsigned int *img_data;
+                int bpp;
                 int stop;
                 int gap_move;
+				int size_img;
+				int img_xstart;
+				int img_ystart;
                 int zoom;
-				int theta;
                 int size_line;
                 int width;
                 int height;
-                int img_width;
-                int img_height;
-                int size_img;
                 int endian;
 				int x_gap;
 				int y_gap;

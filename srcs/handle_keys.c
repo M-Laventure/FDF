@@ -3,77 +3,20 @@
 
 void	handle_color(t_env *fdf, int keycode)
 {
-	ft_bzero(fdf->add_color, sizeof(t_rgb));
 	if (keycode == 15)
-		fdf->add_color->r += 50;
-	if (keycode == 5)
-		fdf->add_color->g += 50;
-	if (keycode == 8)
-		fdf->add_color->b += 50;
+		fdf->add_color->r += -10;
+	else if (keycode == 5)
+		fdf->add_color->g += -10;
+	else if (keycode == 11)
+		fdf->add_color->b += -10;
 }
 
 void 	handle_zoom(t_env *fdf, int keycode)
 {
-	if (keycode == 6)
+	if (keycode == 69)
 		fdf->zoom += 1;
-	else if (keycode == 2)
+	else if (keycode == 78)
 		fdf->zoom -= 1;
-}
-
-void	rotate_x(t_pixel *start, t_env *fdf)
-{
-	int stock_y;
-
-	stock_y = start->y;
-	if (!start)
-		return ;
-	else
-	{
-		start->y *= cos(fdf->theta) + start->z * sin(fdf->theta);
-		start->z = (-stock_y * sin(fdf->theta)) + (start->z * cos(fdf->theta));
-		rotate_x(start->next, fdf);
-	}
-}
-
-void	rotate_y(t_pixel *start, t_env *fdf)
-{
-	int stock_x;
-
-	stock_x = start->x;
-	if (!start->next)
-		return ;
-	else
-	{
-		start->x = (start->x * cos(fdf->theta) + start->z * sin(fdf->theta));
-		start->z = (-stock_x * sin(fdf->theta)) + (start->z * cos(fdf->theta));
-		rotate_y(start->next, fdf);
-	}
-}
-
-void	rotate_z(t_pixel *start, t_env *fdf)
-{
-	int stock_x;
-	
-	stock_x = start->x;
-	if (!start)
-		return ;
-	else
-	{
-		start->x = (start->x * cos(fdf->theta)) + start->x - start->y * sin(fdf->theta);
-		start->y = (start->x * sin(fdf->theta)) + (start->y * cos(fdf->theta));
-		rotate_z(start->next, fdf);
-	}
-}
-
-void	handle_rotation(t_env *fdf, int keycode)
-{
-	if (keycode == 16) // Y
-		rotate_y(fdf->map->p_alpha, fdf);
-	if (keycode == 7) // X
-		rotate_x(fdf->map->p_alpha, fdf);
-	if (keycode == 6) // Z
-		rotate_z(fdf->map->p_alpha, fdf);
-	draw(fdf->map->p_alpha, fdf->map, fdf);
 }
 
 void	handle_alt(t_env *fdf, int keycode)
@@ -112,9 +55,7 @@ int 	key_press(int keycode, void *param)
 		handle_move(keycode, fdf);
 	else if (keycode == 0 || keycode == 3)
 		handle_alt(fdf, keycode);
-	else if (keycode == 16 || keycode == 7 || keycode == 8)
-		handle_rotation(fdf, keycode);
-	else if (keycode == 6 || keycode == 2)
+	else if (keycode == 69 || keycode == 78)
 		handle_zoom(fdf, keycode);
 	else if (keycode == 15 || keycode == 5 || keycode == 11)
 	{
@@ -122,9 +63,21 @@ int 	key_press(int keycode, void *param)
 		handle_color(fdf, keycode);
 	}
 	else if (keycode == 35)
+	{
 		fdf->proj_type = PROJ(fdf->proj_type);
-	draw(fdf->map->p_alpha, fdf->map, fdf);
-	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, 0, 0);
+		if (fdf->proj_type == 0)
+		{
+			fdf->img_xstart = fdf->width / 5;
+			fdf->img_xstart = fdf->height / 5;
+		}
+		else
+		{
+			fdf->img_xstart = 0;
+			fdf->img_ystart = 0;
+		}
+	}	
+	draw(fdf->map->p_alpha, fdf);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->win_ptr, fdf->img_ptr, fdf->img_xstart, fdf->img_ystart);
 	put_menu(fdf);
 	return (0);
 }
