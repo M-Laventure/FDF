@@ -21,14 +21,6 @@ void	put_menu(t_env *fdf)
 	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 80, 0xffd700, Z);	
 }
 
-int		ft_img_size(int width, int height)
-{
-	int size;
-
-	size = width * height;
-	return (size);
-}
-
 void	clear_window(t_env *fdf, int mod)
 {
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
@@ -114,55 +106,7 @@ t_map *ft_init_map(int fd, t_env *fdf)
 	map->p_alpha->y = fdf->y_start;
 	map->p_alpha->next = NULL;
 	ft_strdel(&line);
-	//	ft_tabdel(tmp_line);
 	return (map);
-}
-
-int ft_parsing(char *line)
-{
-	char 	*post_coma;
-	char	*pre_coma;
-	int		len;
-	int		i;
-
-	len = 0;
-	i = 0;
-	if (ft_strchr(line, ',') != NULL)
-	{
-		if (!(post_coma = ft_strdup(ft_strchr(line, ',') + 3)))
-			return (-1);
-		while (line[i++] != ',')
-			len++;
-		i = 0;
-		if (!(pre_coma = ft_strsub(line, 0, len)))
-			return (-1);
-	}
-	if (ft_strchr(line, ',') == NULL)
-	{
-		while (pre_coma[i])
-		{
-			if (ft_isdigit(ft_atoi(&pre_coma[i++]) == 0))
-				return (-1);
-		}
-		return (1);
-	}
-	else
-	{
-		while (pre_coma[i])
-		{
-			if (ft_isdigit(ft_atoi(&pre_coma[i++]) == 0))
-				return (-1);
-		}
-		if (line[len] != ',' || (line[len + 1] != '0' && line[len + 2] != 'x'))
-			return (-1);
-		while (*post_coma)
-		{
-			if (!ft_is_inbase(16, *post_coma))
-				return (-1);
-			post_coma++;
-		}
-	}
-	return (1);
 }
 
 void    empty_tab(t_env *fdf)

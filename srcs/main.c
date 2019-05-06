@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 void	init_mlx(t_env *fdf)
 {
@@ -22,7 +21,7 @@ void	init_mlx(t_env *fdf)
 }
 
 
-void init_env/*fdf*/(t_env *fdf)
+void init_env(t_env *fdf)
 {
 	fdf->gap_move = 10;
 	fdf->zoom = 0;
@@ -65,21 +64,12 @@ int init_fdf(t_env *fdf, char *fdf_map)
 int		main(int argc, char **argv)
 {
 	t_env   fdf;
-	//ewt_map *map;
 
 	if (argc != 2)
 	{
 		ft_putendl("error");
 		return (-1);
 	}
-/*	if ((fd = open(argv[1], O_RDONLY)) == -1)
-		return (-1);
-	init_fdf(&fdf);
-	fdf->fd = fd;
-	if (!(map = ft_get_map(fd, &fdf)))
-		return (-1);
-	fdf.map = map;
-	close(fd);*/
 	if (!(init_fdf(&fdf, argv[1])))
 	{
 		ft_putendl("An error occured");

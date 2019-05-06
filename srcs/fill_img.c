@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_img.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/03 11:48:12 by brobson           #+#    #+#             */
+/*   Updated: 2019/05/03 11:48:17 by brobson          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 void	hex_to_rgb(unsigned int *hex_color, t_rgb *rgb_color, int mod)
 {
@@ -17,11 +28,11 @@ void	hex_to_rgb(unsigned int *hex_color, t_rgb *rgb_color, int mod)
 void    fill_pixel(t_env *fdf, int x, int y, unsigned int hex_color)
 {
 	t_rgb rgb_color;
+
 	hex_to_rgb(&hex_color, &rgb_color, 1);
 	rgb_color.r += fdf->add_color->r % 255;
 	rgb_color.b += fdf->add_color->b % 255;
 	rgb_color.g += fdf->add_color->g % 255;
-
 	rgb_color.r <= 0 ? (rgb_color.r = 254) : (0);	
 	rgb_color.r > 255 ? (rgb_color.r = 10) : (0);
 	rgb_color.g <= 0 ? (rgb_color.g = 254) : (0);	
@@ -33,5 +44,8 @@ void    fill_pixel(t_env *fdf, int x, int y, unsigned int hex_color)
 		y = (y % fdf->height);
 	else if (y < 0)
 		y = fdf->height + (y % fdf->height);
-	fdf->img_data[y * fdf->width + x] = (hex_color == 0xffffff) ? (hex_color) : (hex_color - (y * 1.1));
+	if (hex_color == 0xffffff)
+		fdf->img_data[y * fdf->width + x] = hex_color;
+	else
+		fdf->img_data[y * fdf->width + x] = hex_color - (y * 1.1);
 }
