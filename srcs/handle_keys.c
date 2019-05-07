@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:48:25 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/03 11:48:27 by brobson          ###   ########.fr       */
+/*   Updated: 2019/05/06 16:53:56 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,21 @@ void	handle_color(t_env *fdf, int keycode)
 void	handle_alt(t_env *fdf, int keycode)
 {
 	if (keycode == 0)
-		add_start(fdf->map->p_alpha, fdf, fdf->gap_move, 2, -1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 2, -1);
 	else if (keycode == 3)
-		add_start(fdf->map->p_alpha, fdf, fdf->gap_move, 2, 1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 2, 1);
 }
 
 void	handle_move(int keycode, t_env *fdf)
 {
 	if (keycode == 123)
-		add_start(fdf->map->p_alpha, fdf, fdf->gap_move, 0, -1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 0, -1);
 	else if (keycode == 124)
-		add_start(fdf->map->p_alpha, fdf, fdf->gap_move, 0, 1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 0, 1);
 	else if (keycode == 125)
-		add_start(fdf->map->p_alpha, fdf, fdf->gap_move, 1, 1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 1, 1);
 	else if (keycode == 126)
-		add_start(fdf->map->p_alpha, fdf, fdf->gap_move, 1, -1);
+		add_start(fdf->map->p_alpha, fdf->gap_move, 1, -1);
 }
 
 void	proj_change(t_env *fdf)
@@ -57,7 +57,7 @@ void	proj_change(t_env *fdf)
 	}
 }
 
-int 	key_press(int keycode, void *param)
+int		key_press(int keycode, void *param)
 {
 	t_env *fdf;
 
@@ -65,7 +65,7 @@ int 	key_press(int keycode, void *param)
 	if (keycode == 53)
 	{
 		clear_window(fdf, 1);
-		return (0);
+		exit(1);
 	}
 	else
 		clear_window(fdf, 0);

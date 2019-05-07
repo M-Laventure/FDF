@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/02 20:06:25 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/06 16:45:07 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	init_mlx(t_env *fdf)
 {
 	fdf->mlx_ptr = mlx_init();
-	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->width, fdf->height, "WireFrame");
+	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->width, fdf->height, "fdf");
 	fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-	fdf->img_data = (unsigned int *)mlx_get_data_addr(fdf->img_ptr, &fdf->bpp, &fdf->size_line, &fdf->endian);
+	fdf->img_data = (unsigned int *)mlx_get_data_addr(fdf->img_ptr, &fdf->bpp,
+	&fdf->size_line, &fdf->endian);
 }
 
-
-void init_env(t_env *fdf)
+void	init_env(t_env *fdf)
 {
 	fdf->gap_move = 10;
 	fdf->zoom = 0;
@@ -42,20 +42,21 @@ void init_env(t_env *fdf)
 	ft_bzero(fdf->add_color, sizeof(t_rgb));
 }
 
-int init_fdf(t_env *fdf, char *fdf_map)
+int		init_fdf(t_env *fdf, char *fdf_map)
 {
-	t_map *map;
-	int fd;
+	t_map	*map;
+	int		fd;
 
 	init_env(fdf);
 	init_mlx(fdf);
 	fdf->proj_type = 0;
 	fdf->arg = ft_strdup(fdf_map);
 	if ((fd = open(fdf->arg, O_RDONLY)) == -1)
-		return (-1);
+		exit(1);
 	fdf->fd = fd;
 	if (!(map = ft_get_map(fd, fdf)))
 		return (-1);
+	ft_putendl("la");
 	fdf->map = map;
 	close(fd);
 	return (1);
@@ -63,7 +64,7 @@ int init_fdf(t_env *fdf, char *fdf_map)
 
 int		main(int argc, char **argv)
 {
-	t_env   fdf;
+	t_env	fdf;
 
 	if (argc != 2)
 	{

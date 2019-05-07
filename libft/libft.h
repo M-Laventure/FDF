@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 12:38:54 by malavent          #+#    #+#             */
-/*   Updated: 2019/03/14 14:22:45 by brobson          ###   ########.fr       */
+/*   Updated: 2019/05/06 17:34:29 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ size_t				ft_numlen_base(int value, int base);
 char				ft_convert_itoc(int value);
 char				*ft_itoabase(int value, int base);
 int					ft_intsize(int n);
-int 				ft_convert_power(int n, int b);
+int					ft_convert_power(int n, int b);
 int					ft_get_next_line(const int fd, char **line);
 char				*ft_strjoin_free(char **s1, char **s2);
 int					ft_is_inbase(int base_src, char c);

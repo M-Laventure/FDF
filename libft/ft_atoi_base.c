@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 18:07:34 by malavent          #+#    #+#             */
-/*   Updated: 2019/02/14 12:21:52 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/06 17:30:57 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	ft_trim_blanks(const char *str, int *i)
 {
 	*i = 0;
 	while (str[*i] == '\n' || str[*i] == '\v' || str[*i] == '\f'
-	|| str[*i] == ' ' || str[*i] == '\r')
+			|| str[*i] == ' ' || str[*i] == '\r')
 		*i += 1;
 }
 
@@ -27,8 +27,7 @@ static int	ft_signe(char c)
 	return (1);
 }
 
-
-static int ft_atoi_base10_tob(int nb, int base_dest)
+static int	ft_atoi_base10_tob(int nb, int base_dest)
 {
 	int res;
 	int stock;
@@ -38,7 +37,7 @@ static int ft_atoi_base10_tob(int nb, int base_dest)
 	while (nb > base_dest)
 	{
 		stock = ft_convert_power(nb, base_dest);
-		quotient = nb /stock;
+		quotient = nb / stock;
 		res = res * 10 + quotient;
 		nb = nb - (stock * quotient);
 	}

@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 10:11:00 by malavent          #+#    #+#             */
-/*   Updated: 2019/02/14 12:21:54 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/06 17:29:41 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int	ft_is_inbase(int base_src, char c)
 		if (c >= '0' && c <= '9')
 			return (1);
 		return ((c >= 'A' && c < 'A' + (base_src % 10))
-		|| (c >= 'a' && c < 'a' + (base_src % 10)));
+				|| (c >= 'a' && c < 'a' + (base_src % 10)));
 	}
 }
