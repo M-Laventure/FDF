@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 08:57:46 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/09 11:41:29 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int init_fdf(t_env *fdf, char *fdf_map)
 	fdf->proj_type = 0;
 	fdf->arg = ft_strdup(fdf_map);
 	if ((fd = open(fdf->arg, O_RDONLY)) == -1)
-		return (-1);
+		exit(-1);
 	fdf->fd = fd;
 	if (!(map = ft_get_map(fd, fdf)))
-		return (-1);
+		exit(-1);
 	fdf->map = map;
 	close(fd);
 	return (1);

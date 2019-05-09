@@ -9,7 +9,10 @@
 # include "mlx.h"
 # include <stdio.h>
 # define USAGE "<usage> : ./fdf target_mapfile"
+# define INVALID "Invalid map format"
+#define  VALID  "0123456789xabcdef, "
 
+void	free_pix(t_pixel *pixel);
 void	set_down(t_env *fdf, t_pixel *cur, void (*set_c[2])(t_env *), int *i);
 void	set_right(t_env *fdf, t_pixel *cur, void (*set_c[2])(t_env *), int *i);
 void	get_under_node(t_env *fdf, t_map *map, t_pixel *current);
@@ -29,7 +32,7 @@ void    fill_pxl(t_env *fdf, int x, int y, int color);
 int 	ft_strlen_tab(char **tab);
 int     ft_nblines(int fd);
 void    ft_tabdel(char ***tab);
-int     ft_parsing(char *line);
+int     parsing(char *line);
 t_map   *ft_init_map(int fd, t_env *fdf);
 t_map   *ft_get_map(int fd, t_env *fdf);
 t_pixel *ft_get_line(t_map *map, char *ret_gnl, t_env *fdf);
