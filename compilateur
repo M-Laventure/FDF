@@ -1,1 +1,0 @@
-gcc -Wall -Werror -Wextra -I /usr/local/include srcs/parsing.c srcs/segment.c srcs/set_fonction.c srcs/main.c srcs/tools.c srcs/read_map.c srcs/fill_img.c srcs/pixel.c srcs/handle_keys.c libft/libft.a -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit

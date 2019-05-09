@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:11:49 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 11:54:41 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/09 12:19:11 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int 		check_ifvalid(char *line)
 			exit(-1);
 		}
 	}
-	return (0);
+	return (1);
 }
 
 int			parsing(char *line)

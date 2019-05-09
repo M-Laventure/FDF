@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 14:42:19 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 11:47:19 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/09 13:43:44 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,19 @@ void	put_menu(t_env *fdf)
 
 void	free_pix(t_pixel *pixel)
 {
-	while (pixel)
+	if (!pixel)
+		return ;
+	t_pixel *tmp;
+
+	while (pixel->next)
 	{
-		free(pixel);
+		tmp = pixel;
 		pixel = pixel->next;
+		free(tmp);
 	}
+	free(pixel);
+	pixel = NULL;
+	tmp = NULL;
 	//ft_memdel((void **)&pixel->next);
 	//ft_memdel((void **)pixel);
 }
