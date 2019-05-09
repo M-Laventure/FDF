@@ -6,7 +6,7 @@
 /*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 11:48:25 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/06 16:53:56 by brobson          ###   ########.fr       */
+/*   Updated: 2019/05/07 17:53:50 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		key_press(int keycode, void *param)
 	if (keycode == 53)
 	{
 		clear_window(fdf, 1);
-		exit(1);
+		exit(-1);
 	}
 	else
 		clear_window(fdf, 0);

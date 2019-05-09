@@ -6,7 +6,7 @@
 #    By: malavent <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/06 11:25:29 by malavent          #+#    #+#              #
-#    Updated: 2019/05/06 14:25:06 by malavent         ###   ########.fr        #
+#    Updated: 2019/05/09 08:46:23 by malavent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS_NAME = other_tools.c parsing.c set_fonction.c main.c pixel.c fill_img.c\
 			read_map.c tools.c handle_keys.c segment.c
 SRCS = $(addprefix srcs/, $(SRCS_NAME))
 OBJS = $(SRCS_NAME:.c=.o)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 LFLAGS = libft/libft.a
 LXFLAGS = -L /usr/local/lib -lmlx -framework OpenGL -framework Appkit
 

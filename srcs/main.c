@@ -3,25 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/06 16:45:07 by brobson          ###   ########.fr       */
+/*   Updated: 2019/05/09 08:57:46 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
+#include <stdio.h>
 
 void	init_mlx(t_env *fdf)
 {
 	fdf->mlx_ptr = mlx_init();
-	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->width, fdf->height, "fdf");
+	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->width, fdf->height, "WireFrame");
 	fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-	fdf->img_data = (unsigned int *)mlx_get_data_addr(fdf->img_ptr, &fdf->bpp,
-	&fdf->size_line, &fdf->endian);
+	fdf->img_data = (unsigned int *)mlx_get_data_addr(fdf->img_ptr, &fdf->bpp, &fdf->size_line, &fdf->endian);
 }
 
-void	init_env(t_env *fdf)
+
+void init_env/*fdf*/(t_env *fdf)
 {
 	fdf->gap_move = 10;
 	fdf->zoom = 0;
@@ -38,25 +39,25 @@ void	init_env(t_env *fdf)
 	fdf->z1 = 0;
 	fdf->z2 = 0;
 	fdf->size_img = fdf->width * fdf->height;
-	fdf->add_color = (t_rgb *)malloc(sizeof(t_rgb));
+	if (!(fdf->add_color = (t_rgb *)malloc(sizeof(t_rgb))))
+		exit(1);
 	ft_bzero(fdf->add_color, sizeof(t_rgb));
 }
 
-int		init_fdf(t_env *fdf, char *fdf_map)
+int init_fdf(t_env *fdf, char *fdf_map)
 {
-	t_map	*map;
-	int		fd;
+	t_map *map;
+	int fd;
 
 	init_env(fdf);
 	init_mlx(fdf);
 	fdf->proj_type = 0;
 	fdf->arg = ft_strdup(fdf_map);
 	if ((fd = open(fdf->arg, O_RDONLY)) == -1)
-		exit(1);
+		return (-1);
 	fdf->fd = fd;
 	if (!(map = ft_get_map(fd, fdf)))
 		return (-1);
-	ft_putendl("la");
 	fdf->map = map;
 	close(fd);
 	return (1);
@@ -64,11 +65,11 @@ int		init_fdf(t_env *fdf, char *fdf_map)
 
 int		main(int argc, char **argv)
 {
-	t_env	fdf;
+	t_env   fdf;
 
 	if (argc != 2)
 	{
-		ft_putendl("error");
+		ft_putendl(USAGE);
 		return (-1);
 	}
 	if (!(init_fdf(&fdf, argv[1])))

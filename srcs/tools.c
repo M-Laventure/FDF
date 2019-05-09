@@ -3,27 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/06 17:13:57 by brobson          ###   ########.fr       */
+/*   Updated: 2019/05/09 09:31:43 by malavent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
+#include <stdio.h>
 
-void	ft_tabdel(char **tab)
+/*void	ft_tabdel(char **tab)
 {
+	int i;
+
+	i = 0;
 	if (!tab)
 		return ;
-	while (*tab)
+	while (tab[i])
 	{
-		free(*tab);
-		tab++;
+		ft_strdel(&tab[i]);
+		i++;
 	}
 	free(tab);
 	tab = NULL;
-}
+	printf("address : %p\n", tab);
+}*/
 
 void	ft_pxl_pushback(t_pixel *begin, t_pixel *node)
 {
@@ -44,12 +49,11 @@ t_map	*ft_init_map(int fd, t_env *fdf)
 
 	ft_get_next_line(fd, &line);
 	if (!(tmp_line = ft_strsplit(line, ' ')))
-		return (NULL);
-			ft_putendl("la");
+		exit(-1);
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
-		exit(1);
+		exit(-1);	
 	if (!(p_alpha = ft_init_pix()))
-		exit(1);
+		exit(-1);
 	ft_putendl("la");
 	map->nb_lines = ft_nblines(fd) + 1;
 	map->nb_col = ft_strlen_tab(tmp_line);
@@ -61,6 +65,7 @@ t_map	*ft_init_map(int fd, t_env *fdf)
 	map->p_alpha->y = fdf->y_start;
 	map->p_alpha->next = NULL;
 	ft_strdel(&line);
+	ft_tabdel(&tmp_line);
 	return (map);
 }
 
