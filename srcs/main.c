@@ -22,7 +22,7 @@ void	init_mlx(t_env *fdf)
 }
 
 
-void init_env/*fdf*/(t_env *fdf)
+void init_env(t_env *fdf)
 {
 	fdf->gap_move = 10;
 	fdf->zoom = 0;

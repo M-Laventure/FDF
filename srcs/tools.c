@@ -13,23 +13,6 @@
 #include "../Includes/fdf.h"
 #include <stdio.h>
 
-/*void	ft_tabdel(char **tab)
-{
-	int i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		ft_strdel(&tab[i]);
-		i++;
-	}
-	free(tab);
-	tab = NULL;
-	printf("address : %p\n", tab);
-}*/
-
 void	ft_pxl_pushback(t_pixel *begin, t_pixel *node)
 {
 	if (begin->next == NULL)
@@ -46,15 +29,13 @@ t_map	*ft_init_map(int fd, t_env *fdf)
 	char		**tmp_line;
 
 	line = 0;
-
 	ft_get_next_line(fd, &line);
 	if (!(tmp_line = ft_strsplit(line, ' ')))
 		exit(-1);
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
-		exit(-1);	
+		exit(-1);
 	if (!(p_alpha = ft_init_pix()))
 		exit(-1);
-	ft_putendl("la");
 	map->nb_lines = ft_nblines(fd) + 1;
 	map->nb_col = ft_strlen_tab(tmp_line);
 	map->map_size = map->nb_lines * map->nb_col;

@@ -69,4 +69,6 @@ void	segment(t_env *fdf, unsigned int color)
 			fill_pixel(fdf, seg->x, seg->y, color);
 		}
 	}
+	free(seg);
+	seg = NULL;
 }

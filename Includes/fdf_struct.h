@@ -16,7 +16,6 @@
 # define CTE1 0.4
 # define CTE2 0.4
 # define ARROWS "move : [arrow keys]"
-# define ZOOM "zoom: [+/-]"
 # define SWITCH "Switch proj: [p]"
 # define COLORS "Change colors:[r, g , b]"
 # define Z "Increase or Decrease z: [a, f]"

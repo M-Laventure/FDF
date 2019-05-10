@@ -15,7 +15,6 @@
 void	put_menu(t_env *fdf)
 {
 	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 0, 0xffd700, ARROWS);
-	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 20, 0xffd700, ZOOM);
 	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 40, 0xffd700, SWITCH);
 	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 60, 0xffd700, COLORS);
 	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 80, 0xffd700, Z);
@@ -36,8 +35,6 @@ void	free_pix(t_pixel *pixel)
 	free(pixel);
 	pixel = NULL;
 	tmp = NULL;
-	//ft_memdel((void **)&pixel->next);
-	//ft_memdel((void **)pixel);
 }
 void	clear_window(t_env *fdf, int mod)
 {
@@ -91,4 +88,3 @@ void	free_env(t_env *fdf)
 	ft_memdel((void **)&fdf->arg);
 	ft_memdel((void **)&fdf);
 }
-

@@ -20,10 +20,7 @@ static int	parsing_precoma(char *precoma)
 	while (precoma[i])
 	{
 		if (ft_isdigit(ft_atoi(precoma + i) == 0))
-		{
-		//	ft_strdel(&precoma);
 			exit(-1);
-		}
 		i++;
 	}
 	return (1);
@@ -49,6 +46,7 @@ static int 		check_ifvalid(char *line)
 	{
 		if (!(ft_strchr(VALID, line[i])))
 		{
+			ft_putendl("coucou");
 			ft_putendl_fd(INVALID, 2);
 			exit(-1);
 		}
@@ -70,6 +68,7 @@ int			parsing(char *line)
 	{
 		if (!(post_c = ft_strdup(ft_strchr(line, ',') + 3)))
 		{
+			ft_putendl("1");
 			ft_putendl("invalid map");
 			exit(-1);
 		}
@@ -78,11 +77,13 @@ int			parsing(char *line)
 		i = 0;
 		if (!(parsing_postcoma(post_c)))
 		{
+			ft_putendl("2");
 			ft_putendl("invalid map");
 			exit(-1);
 		}
 		if (line[len] != ',' || (line[len + 1] != '0' && line[len + 2] != 'x'))
 		{
+			ft_putendl("3");		
 			ft_putendl("invalid map");
 			exit(-1);
 		}

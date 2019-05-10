@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 t_pixel		*pushback(t_env *fdf, t_map *map, char *point, t_pixel *tmp)
 {
@@ -38,8 +37,7 @@ void	ft_tabdel(char ***tab)
 	}
 	ft_strdel(&tmp[i]);
 	free(*tab);
-	*tab = NULL;	
-	printf("address : %p\n", tab);
+	*tab = NULL;
 }
 
 t_pixel		*ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
@@ -63,11 +61,7 @@ t_pixel		*ft_get_line(t_map *map, char *ret_gnl, t_env *fdf)
 		parsing(tmp_line[i]);
 		tmp = pushback(fdf, map, tmp_line[i], tmp);
 	}
-	printf("this is the adress of la variable1: %p\n", tmp_line);
 	ft_tabdel(&tmp_line);
-	printf("this is the adress of la variable2: %p\n", tmp_line);
-
-	//printf("this is the adress of la variable3: %p\n", tmp_line);
 	return (tmp);
 }
 
@@ -94,15 +88,15 @@ t_pixel		*ft_get_pixel(char *str, t_map *map, t_env *fdf)
 			exit(-1);
 		pixel->z = ft_atoi(tmp);
 		pixel->color = ft_atoi_base(post_coma, 16, 10);
-		ft_strdel(&tmp); //free
-		ft_strdel(&post_coma); //free
+		ft_strdel(&tmp);
+		ft_strdel(&post_coma);
 	}
 	else
 		color_pixel(pixel, str);
 	pixel->x = fdf->x_start + ((n_pt % map->nb_col) * fdf->x_gap);
 	pixel->y = fdf->y_start + ((n_pt / map->nb_col) * fdf->y_gap);
 	n_pt++;
-	return (pixel);	
+	return (pixel);
 }
 
 t_map		*ft_get_map(int fd, t_env *fdf)
@@ -131,7 +125,6 @@ t_map		*ft_get_map(int fd, t_env *fdf)
 			exit(-1);
 		ft_pxl_pushback((map->p_alpha)->next, pix_line);
 		ft_strdel(&ret_gnl);
-	//	free_pix(pix_line);
 		y++;
 	}
 	return (map);

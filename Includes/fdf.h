@@ -10,7 +10,7 @@
 # include <stdio.h>
 # define USAGE "<usage> : ./fdf target_mapfile"
 # define INVALID "Invalid map format"
-#define  VALID  "0123456789xabcdef, "
+#define  VALID  "-0123456789xabcdefABCDEF, "
 
 void	free_pix(t_pixel *pixel);
 void	set_down(t_env *fdf, t_pixel *cur, void (*set_c[2])(t_env *), int *i);
