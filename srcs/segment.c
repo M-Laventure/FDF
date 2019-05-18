@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   segment.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brobson <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: brobson <brobson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/03 12:04:53 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/07 17:36:49 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:55:01 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
 
-void	init_seg(t_seg *seg, t_env *fdf)
+static void	init_seg(t_seg *seg, t_env *fdf)
 {
 	seg->x = fdf->x1;
 	seg->y = fdf->y1;
@@ -24,7 +24,7 @@ void	init_seg(t_seg *seg, t_env *fdf)
 	seg->dy = abs(seg->dy);
 }
 
-void	seg_x(t_seg *seg, int *i, t_env *fdf, unsigned int color)
+static void	seg_x(t_seg *seg, int *i, t_env *fdf, unsigned int color)
 {
 	*i += 1;
 	seg->cumul = seg->dx / 2;
@@ -42,7 +42,13 @@ void	seg_x(t_seg *seg, int *i, t_env *fdf, unsigned int color)
 	}
 }
 
-void	segment(t_env *fdf, unsigned int color)
+static void	modif_c(t_seg *seg)
+{
+	seg->cumul -= seg->dy;
+	seg->x += seg->xinc;
+}
+
+void		segment(t_env *fdf, unsigned int color)
 {
 	t_seg	*seg;
 	int		i;
@@ -62,10 +68,7 @@ void	segment(t_env *fdf, unsigned int color)
 			seg->y += seg->yinc;
 			seg->cumul += seg->dx;
 			if (seg->cumul >= seg->dy)
-			{
-				seg->cumul -= seg->dy;
-				seg->x += seg->xinc;
-			}
+				modif_c(seg);
 			fill_pixel(fdf, seg->x, seg->y, color);
 		}
 	}

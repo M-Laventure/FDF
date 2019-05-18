@@ -6,7 +6,7 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:11:49 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 12:19:11 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:34:36 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	parsing_postcoma(char *post_coma)
 	return (1);
 }
 
-static int 		check_ifvalid(char *line)
+static int	check_ifvalid(char *line)
 {
 	int i;
 
@@ -46,12 +46,17 @@ static int 		check_ifvalid(char *line)
 	{
 		if (!(ft_strchr(VALID, line[i])))
 		{
-			ft_putendl("coucou");
 			ft_putendl_fd(INVALID, 2);
 			exit(-1);
 		}
 	}
 	return (1);
+}
+
+static void	put_endl_exit(void)
+{
+	ft_putendl("invalid map");
+	exit(-1);
 }
 
 int			parsing(char *line)
@@ -62,37 +67,20 @@ int			parsing(char *line)
 
 	len = 0;
 	i = 0;
-	if (!(check_ifvalid(line)))
-		exit(-1);
+	check_ifvalid(line);
 	if (ft_strchr(line, ',') != NULL)
 	{
 		if (!(post_c = ft_strdup(ft_strchr(line, ',') + 3)))
-		{
-			ft_putendl("1");
-			ft_putendl("invalid map");
-			exit(-1);
-		}
+			put_endl_exit();
 		while (line[i++] != ',')
 			len++;
 		i = 0;
-		if (!(parsing_postcoma(post_c)))
-		{
-			ft_putendl("2");
-			ft_putendl("invalid map");
-			exit(-1);
-		}
+		parsing_postcoma(post_c);
 		if (line[len] != ',' || (line[len + 1] != '0' && line[len + 2] != 'x'))
-		{
-			ft_putendl("3");		
-			ft_putendl("invalid map");
-			exit(-1);
-		}
+			put_endl_exit();
 		ft_strdel(&post_c);
 	}
 	else
-	{
-		if (!parsing_precoma(line))
-			exit(-1);
-	}
+		parsing_precoma(line);
 	return (1);
 }

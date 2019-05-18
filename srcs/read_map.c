@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brobson <brobson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/13 10:22:22 by malavent          #+#    #+#             */
-/*   Updated: 2019/05/09 13:42:35 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:59:33 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ t_pixel		*pushback(t_env *fdf, t_map *map, char *point, t_pixel *tmp)
 	return (tmp);
 }
 
-void	ft_tabdel(char ***tab)
+void		ft_tabdel(char ***tab)
 {
-	char **tmp;
-	int i;
+	char	**tmp;
+	int		i;
 
 	tmp = *tab;
 	i = 0;
@@ -97,35 +97,4 @@ t_pixel		*ft_get_pixel(char *str, t_map *map, t_env *fdf)
 	pixel->y = fdf->y_start + ((n_pt / map->nb_col) * fdf->y_gap);
 	n_pt++;
 	return (pixel);
-}
-
-t_map		*ft_get_map(int fd, t_env *fdf)
-{
-	t_map		*map;
-	t_pixel		*pix_line;
-	char		*ret_gnl;
-	int			y;
-
-	y = 0;
-	
-	if (!(map = ft_init_map(fd, fdf)))
-		exit(-1);
-	if (!(pix_line = ft_memalloc(sizeof(t_pixel *))))
-		exit(-1);
-	close(fd);
-	fd = open(fdf->arg, O_RDONLY);
-	ft_get_next_line(fd, &ret_gnl);
-	if (!(pix_line = ft_get_line(map, ret_gnl, fdf)))
-		exit(-1);
-	ft_strdel(&ret_gnl);
-	map->p_alpha = pix_line;
-	while ((ft_get_next_line(fd, &ret_gnl) > 0))
-	{
-		if (!(pix_line = ft_get_line(map, ret_gnl, fdf)))
-			exit(-1);
-		ft_pxl_pushback((map->p_alpha)->next, pix_line);
-		ft_strdel(&ret_gnl);
-		y++;
-	}
-	return (map);
 }

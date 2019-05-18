@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brobson <brobson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 13:54:02 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 09:31:43 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:46:59 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 void	ft_pxl_pushback(t_pixel *begin, t_pixel *node)
 {
@@ -34,8 +33,7 @@ t_map	*ft_init_map(int fd, t_env *fdf)
 		exit(-1);
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		exit(-1);
-	if (!(p_alpha = ft_init_pix()))
-		exit(-1);
+	p_alpha = ft_init_pix();
 	map->nb_lines = ft_nblines(fd) + 1;
 	map->nb_col = ft_strlen_tab(tmp_line);
 	map->map_size = map->nb_lines * map->nb_col;
@@ -47,6 +45,7 @@ t_map	*ft_init_map(int fd, t_env *fdf)
 	map->p_alpha->next = NULL;
 	ft_strdel(&line);
 	ft_tabdel(&tmp_line);
+	free(p_alpha);
 	return (map);
 }
 
@@ -67,4 +66,24 @@ void	empty_tab(t_env *fdf)
 		y = 0;
 		x++;
 	}
+}
+
+t_pixel	*ft_init_pix(void)
+{
+	t_pixel *new;
+
+	if (!(new = (t_pixel *)malloc(sizeof(t_pixel))))
+		exit(-1);
+	ft_bzero(new, sizeof(t_pixel));
+	new->next = NULL;
+	return (new);
+}
+
+void	free_env(t_env *fdf)
+{
+	ft_memdel((void **)&fdf->map);
+	ft_memdel((void **)&fdf->add_color);
+	ft_memdel((void **)&fdf->img_data);
+	ft_memdel((void **)&fdf->arg);
+	ft_memdel((void **)&fdf);
 }

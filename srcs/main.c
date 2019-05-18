@@ -6,23 +6,23 @@
 /*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/14 15:40:21 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 11:41:29 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:26:15 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 void	init_mlx(t_env *fdf)
 {
 	fdf->mlx_ptr = mlx_init();
-	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->width, fdf->height, "WireFrame");
+	fdf->win_ptr = mlx_new_window(fdf->mlx_ptr, fdf->width,
+	fdf->height, "WireFrame");
 	fdf->img_ptr = mlx_new_image(fdf->mlx_ptr, fdf->width, fdf->height);
-	fdf->img_data = (unsigned int *)mlx_get_data_addr(fdf->img_ptr, &fdf->bpp, &fdf->size_line, &fdf->endian);
+	fdf->img_data = (unsigned int *)mlx_get_data_addr(fdf->img_ptr,
+	&fdf->bpp, &fdf->size_line, &fdf->endian);
 }
 
-
-void init_env(t_env *fdf)
+void	init_env(t_env *fdf)
 {
 	fdf->gap_move = 10;
 	fdf->zoom = 0;
@@ -40,14 +40,14 @@ void init_env(t_env *fdf)
 	fdf->z2 = 0;
 	fdf->size_img = fdf->width * fdf->height;
 	if (!(fdf->add_color = (t_rgb *)malloc(sizeof(t_rgb))))
-		exit(1);
+		exit(-1);
 	ft_bzero(fdf->add_color, sizeof(t_rgb));
 }
 
-int init_fdf(t_env *fdf, char *fdf_map)
+int		init_fdf(t_env *fdf, char *fdf_map)
 {
-	t_map *map;
-	int fd;
+	t_map	*map;
+	int		fd;
 
 	init_env(fdf);
 	init_mlx(fdf);
@@ -65,7 +65,7 @@ int init_fdf(t_env *fdf, char *fdf_map)
 
 int		main(int argc, char **argv)
 {
-	t_env   fdf;
+	t_env	fdf;
 
 	if (argc != 2)
 	{

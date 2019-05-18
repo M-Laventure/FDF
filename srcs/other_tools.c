@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   other_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malavent <malavent@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brobson <brobson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 14:42:19 by brobson           #+#    #+#             */
-/*   Updated: 2019/05/09 13:43:44 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:38:13 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 void	put_menu(t_env *fdf)
 {
 	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 0, 0xffd700, ARROWS);
-	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 40, 0xffd700, SWITCH);
-	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 60, 0xffd700, COLORS);
-	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 80, 0xffd700, Z);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 20, 0xffd700, SWITCH);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 40, 0xffd700, COLORS);
+	mlx_string_put(fdf->mlx_ptr, fdf->win_ptr, 0, 60, 0xffd700, Z);
 }
 
 void	free_pix(t_pixel *pixel)
 {
-	if (!pixel)
-		return ;
 	t_pixel *tmp;
 
+	if (!pixel)
+		return ;
 	while (pixel->next)
 	{
 		tmp = pixel;
@@ -36,6 +36,7 @@ void	free_pix(t_pixel *pixel)
 	pixel = NULL;
 	tmp = NULL;
 }
+
 void	clear_window(t_env *fdf, int mod)
 {
 	mlx_clear_window(fdf->mlx_ptr, fdf->win_ptr);
@@ -67,24 +68,4 @@ int		ft_nblines(int fd)
 		ft_strdel(&line);
 	}
 	return (nb_lines);
-}
-
-t_pixel	*ft_init_pix(void)
-{
-	t_pixel *new;
-
-	if (!(new = (t_pixel *)malloc(sizeof(t_pixel))))
-		exit(-1);
-	ft_bzero(new, sizeof(t_pixel));
-	new->next = NULL;
-	return (new);
-}
-
-void	free_env(t_env *fdf)
-{
-	ft_memdel((void **)&fdf->map);
-	ft_memdel((void **)&fdf->add_color);
-	ft_memdel((void **)&fdf->img_data);
-	ft_memdel((void **)&fdf->arg);
-	ft_memdel((void **)&fdf);
 }

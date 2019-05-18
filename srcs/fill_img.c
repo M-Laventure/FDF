@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fill_img.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: malavent <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: brobson <brobson@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/06 15:31:28 by malavent          #+#    #+#             */
-/*   Updated: 2019/05/07 17:53:09 by malavent         ###   ########.fr       */
+/*   Updated: 2019/05/18 18:19:02 by brobson          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/fdf.h"
-#include <stdio.h>
 
 void	hex_to_rgb(unsigned int *hex_color, t_rgb *rgb_color, int mod)
 {

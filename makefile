@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: malavent <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: brobson <brobson@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/06 11:25:29 by malavent          #+#    #+#              #
-#    Updated: 2019/05/09 08:46:23 by malavent         ###   ########.fr        #
+#    Updated: 2019/05/18 18:59:13 by brobson          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = fdf
 CC = gcc
 HEADERS = -I Includes
 SRCS_NAME = other_tools.c parsing.c set_fonction.c main.c pixel.c fill_img.c\
-			read_map.c tools.c handle_keys.c segment.c
+			read_map.c tools.c handle_keys.c segment.c get_fonction.c
 SRCS = $(addprefix srcs/, $(SRCS_NAME))
 OBJS = $(SRCS_NAME:.c=.o)
 CFLAGS = -g -Wall -Wextra -Werror
