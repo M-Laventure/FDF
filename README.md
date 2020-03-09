@@ -5,6 +5,9 @@
 ## How to run it ?
 
 `git clone https://github.com/M-Laventure/FDF FDF`
+
 `cd FDF `
+
 `make all`
+
 `./FDF FileToView`
