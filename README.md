@@ -10,4 +10,4 @@
 
 `make all`
 
-`./FDF FileToView`
+`./FDF test_maps/FileToView`
